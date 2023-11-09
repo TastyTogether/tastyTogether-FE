@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-
 export const Container = styled.div`
     min-height: 100vh;
     margin-top: 6%;
@@ -109,17 +108,12 @@ export const UserBox = styled.div`
     }
 `;
 
-export const CommentBox = styled.div`
-    width: auto;
-    height: 380px;
-    display: flex;
-    flex-direction: column;
-`;
 export const AddComment = styled.div`
     width: auto;
     height: 150px;
     display: flex;
     justify-content: center;
+    align-items: center;
 `;
 export const ProfileImg = styled.img`
     width: 47px;
@@ -128,6 +122,37 @@ export const ProfileImg = styled.img`
     height: 100%;
     object-fit: cover;
 `;
+
+// 댓글 box
+export const CommentBox = styled.div`
+    width: auto;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`;
+
+// 댓글 컴포넌트
+export const CommentList = styled.div`
+    width: 998px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid #ff9c5f;
+`;
+
+// 댓글 프로필 부분 (프로필 이미지 + 닉네임 + 작성시간)
+export const CommentProfile = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 20px;
+`;
+
+// 댓글 프로필 이미지 감싸는 컴포넌트
 export const ProfileBox = styled.div`
     width: 50px;
     height: 50px;
@@ -135,17 +160,12 @@ export const ProfileBox = styled.div`
     overflow: hidden;
     margin-right: 20px;
 `;
-export const CommentProfile = styled.div`
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    margin-left: 20px;
-    margin-top: 10px;
-    font-size: 20px;
-`;
+
+// 댓글 작성 시간
 export const CommentTime = styled.div`
     font-size: 15px;
 `;
+
 export const CommentContent = styled.div`
     display: flex;
     justify-content: space-between;
@@ -154,11 +174,7 @@ export const CommentContent = styled.div`
     margin-left: 50px;
     margin-right: 50px;
 `;
-export const CommnetList = styled.div`
-    width: 998px;
-    height: 125px;
-    border-bottom: 2px solid #ff9c5f;
-`;
+
 export const NickName = styled.div`
     font-size: 18px;
 `;
@@ -187,7 +203,7 @@ export const DeleteBtn = styled.div`
     align-items: center;
     cursor: pointer;
 `;
-export const CommnetInput = styled.input`
+export const CommentInput = styled.input`
     width: 750px;
     font-size: 15px;
     border: none;
