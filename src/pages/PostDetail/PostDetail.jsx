@@ -160,7 +160,7 @@ export default function PostDetail() {
                         post.comments &&
                         post.comments.map((comment) => {
                             return (
-                                <S.CommnetList key={comment.id}>
+                                <S.CommentList key={comment.id}>
                                     <S.CommentProfile>
                                         <S.ProfileBox>
                                             <S.ProfileImg
@@ -192,13 +192,13 @@ export default function PostDetail() {
                                             삭제
                                         </S.DeleteBtn>
                                     </S.CommentContent>
-                                </S.CommnetList>
+                                </S.CommentList>
                             );
                         })}
                 </S.CommentBox>
                 <S.AddComment>
                     <S.CommentAdd>
-                        <S.CommnetInput
+                        <S.CommentInput
                             type="text"
                             placeholder="댓글을 입력하세요..."
                             value={commentContent}
