@@ -3,12 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './style/StoreRegister.style';
 import useAxios from '../../hooks/useAxios';
 import { isValidPhoneNumber, isValidHour, isvalidMinute } from '../../utils/regList';
-import { StoreName } from '../StoreDetail/style/TopDetail.style';
+import DaumPostApi from './DaumPostApi';
 
 export default function StoreRegister2() {
     const { authRequiredAxios } = useAxios('application/json');
     const navigate = useNavigate();
-    const [address, setAddress] = useState('');
+    const [isRestaurantRegistered, setIsRestaurantRegistered] = useState(true);
+    const [address, setAddress] = useState({
+        street: '',
+        fullAddress: '',
+        city: '',
+        state: '',
+        zipcode: '',
+        name: '',
+        latitude: '',
+        longitude: '',
+    });
     const [storeName, setStoreName] = useState('');
     const [phone, setPhone] = useState('');
     const [priceRange, setPriceRange] = useState('');
@@ -26,12 +36,7 @@ export default function StoreRegister2() {
 
     const handleChange = (e) => {
         const { name, value, id } = e.target;
-        if (name === 'address') {
-            setAddress(value);
-        }
-        if (name === 'storeName') {
-            setStoreName(value);
-        }
+
         if (name === 'phone') {
             setPhone(value);
         }
@@ -149,12 +154,20 @@ export default function StoreRegister2() {
                         <S.InputBox
                             placeholder="주소를 검색해주세요."
                             name="address"
-                            value={address ?? ''}
+                            value={address.name === '' ? '' : address.fullAddress}
                             onChange={handleChange}
+                            readOnly
                         />
-                        <S.SearchBtn>검색</S.SearchBtn>
+
+                        <DaumPostApi
+                            setIsRestaurantRegistered={setIsRestaurantRegistered}
+                            setAddress={setAddress}
+                            setStoreName={setStoreName}
+                        />
                         <S.RegistrationStatusMessage>
-                            등록되지 않은 가게 입니다. 추가 정보들을 입력해주세요!
+                            {isRestaurantRegistered
+                                ? '이미 등록된 가게입니다. 가게를 검색해주세요.'
+                                : '등록되지 않은 가게 입니다. 추가 정보들을 입력해주세요!'}
                         </S.RegistrationStatusMessage>
                         <S.MapImage></S.MapImage>
                     </S.StoreLocatorRegistration>
@@ -166,6 +179,7 @@ export default function StoreRegister2() {
                         name="storeName"
                         value={storeName ?? ''}
                         onChange={handleChange}
+                        readOnly
                     />
                 </S.EditContentBox>
                 <S.EditContentBox>

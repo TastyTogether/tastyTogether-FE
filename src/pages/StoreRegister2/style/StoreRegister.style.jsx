@@ -80,7 +80,7 @@ export const InputBox = styled.input`
     }
 `;
 
-export const SearchBtn = styled.button`
+export const SearchBtn = styled.label`
     width: 78px;
     height: 32px;
     border: 1px solid #ff914d;
@@ -88,6 +88,14 @@ export const SearchBtn = styled.button`
     margin-top: -4px;
     background: #ff914d;
     color: #fff;
+`;
+
+export const MapPopup = styled.div`
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100;
 `;
 
 export const MapImage = styled.div`
