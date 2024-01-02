@@ -31,15 +31,16 @@ export default function StoreItem({ store }) {
                 </S.Tags>
                 <S.Icons>
                     <S.Icon>
-                        <S.StarIcon /> {store.starRating}
-                    </S.Icon>
-                    <S.Icon>
-                        리뷰
-                        {store.reviews.length}
+                        <S.StarIcon />
+                        <S.IconCount>{store.starRating}</S.IconCount>
                     </S.Icon>
                     <S.Icon>
                         <S.BookMarkIcon />
-                        {store.storeLikes.length}
+                        <S.IconCount>{store.storeLikes.length}</S.IconCount>
+                    </S.Icon>
+                    <S.Icon>
+                        리뷰
+                        <S.IconCount>{store.reviews.length}</S.IconCount>
                     </S.Icon>
                 </S.Icons>
             </S.ItemCenter>

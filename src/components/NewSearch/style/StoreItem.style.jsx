@@ -66,15 +66,22 @@ export const Icons = styled.div`
 
 export const Icon = styled.span`
     &:nth-of-type(2) {
-        margin: 0 0.6rem;
+        margin: 0 0.7rem;
     }
     display: flex;
     align-items: center;
     font-size: 1.1rem;
 `;
 
+export const IconCount = styled.span`
+    margin-left: 0.2rem;
+    font-size: 1.1rem;
+    line-height: 1.1rem;
+`;
+
 export const StarIcon = styled(FaStar)`
     color: tomato;
+    font-size: 1.2rem;
 `;
 
 export const BookMarkIcon = styled(FaBookmark)`
