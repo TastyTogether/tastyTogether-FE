@@ -14,7 +14,10 @@ export default function Banner() {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/stores/search?keyword=${text}`);
+        if (text.trim().length === 0) {
+            return;
+        }
+        navigate(`/stores/search/${text}`);
     };
     useEffect(() => {
         try {
