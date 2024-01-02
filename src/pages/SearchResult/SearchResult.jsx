@@ -2,17 +2,17 @@ import axios from '../../utils/axios';
 import React, { useState, useMemo, useEffect } from 'react';
 import * as S from './style/SearchResult.style';
 import SortFilter from '../../components/SearchResult/SortFilter';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ResultNotice from '../../components/SearchResult/ResultNotice';
 import SearchResultItem from '../../components/SearchResult/SearchResultItem';
 import FilteredMap from '../../components/SearchResult/FilteredMap';
 
 export default function SearchResult() {
     const navigate = useNavigate();
-    useEffect(()=>{
-        if(currentPageItems. length === 0)return;
-    })
-    const keyword = window.location.search.split('=')[1];
+    useEffect(() => {
+        if (currentPageItems.length === 0) return;
+    });
+    const { keyword } = useParams();
 
     const [selectedSort, setSelectedSort] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -47,15 +47,10 @@ export default function SearchResult() {
     const pageItems = useMemo(() => {
         if (keyword.trim() !== '') {
             return applySearchAndSort;
-        } 
-        else {
+        } else {
             return stores;
         }
-    }, [
-        applySearchAndSort,
-        keyword.trim(),
-        stores,
-    ]);
+    }, [applySearchAndSort, keyword.trim(), stores]);
 
     const itemsPerPage = 5;
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -72,17 +67,13 @@ export default function SearchResult() {
             });
         }
     }, [clickedStore]);
-
     return (
         <S.Container>
             <S.Search>
                 <S.ResultDiv>
                     <SortFilter setSelectedSort={setSelectedSort} />
                     <FilteredMap currentPageItems={currentPageItems} />
-                    <ResultNotice
-                        keyword={keyword}
-                        applySearchAndSort={applySearchAndSort}
-                    />
+                    <ResultNotice keyword={keyword} applySearchAndSort={applySearchAndSort} />
                     <S.ResultStores>
                         <S.Result>
                             {currentPageItems.map((item, index) => {
@@ -95,9 +86,8 @@ export default function SearchResult() {
                                             id={item._id}
                                         />
                                     );
-                                }
-                                else {
-                                    return null; 
+                                } else {
+                                    return null;
                                 }
                             })}
                         </S.Result>

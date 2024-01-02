@@ -14,7 +14,10 @@ export default function Header() {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/stores/search?keyword=${text}`);
+        if (text.trim().length === 0) {
+            return;
+        }
+        navigate(`/stores/search/${text}`);
     };
     return (
         <S.Container>
