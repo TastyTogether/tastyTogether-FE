@@ -4,39 +4,50 @@ import * as S from './style/StoreRegister.style';
 import useAxios from '../../hooks/useAxios';
 import { isValidPhoneNumber, isValidHour, isvalidMinute } from '../../utils/regList';
 import DaumPostApi from './DaumPostApi';
+import KaoKaoMap from './KaKaoMap';
+import BannerUploadContainer from './BannerUploadContainer';
 
 export default function StoreRegister2() {
     const { authRequiredAxios } = useAxios('application/json');
     const navigate = useNavigate();
-    const [isRestaurantRegistered, setIsRestaurantRegistered] = useState(true);
+    const [isRestaurantRegistered, setIsRestaurantRegistered] = useState('');
+    const [storeName, setStoreName] = useState('');
     const [address, setAddress] = useState({
         street: '',
         fullAddress: '',
         city: '',
         state: '',
-        zipcode: '',
+        zipCode: '',
         name: '',
         latitude: '',
         longitude: '',
     });
-    const [storeName, setStoreName] = useState('');
+    const [restaurantCategory, setRestaurantCategory] = useState('');
     const [phone, setPhone] = useState('');
     const [priceRange, setPriceRange] = useState('');
-    const [closedDays, setClosedDays] = useState('');
     const [parkingInfo, setParkingInfo] = useState('');
     const [isChecked, setIsChecked] = useState(false);
     const [businessHours, setBusinessHours] = useState(['', '', '', '']);
+    const [closedDays, setClosedDays] = useState('');
     const [menuItems, setMenuItems] = useState([
         { name: '', price: '' },
         { name: '', price: '' },
         { name: '', price: '' },
     ]);
+    console.log(menuItems);
+    const [banners, setBanners] = useState([]);
 
     const dayCheckList = ['월', '화', '수', '목', '금', '토', '일', '연중무휴'];
 
     const handleChange = (e) => {
         const { name, value, id } = e.target;
 
+        if (name === 'storeName') {
+            setStoreName(value);
+        }
+        if (name === 'restaurantCategory') {
+            setRestaurantCategory(value);
+        }
         if (name === 'phone') {
             setPhone(value);
         }
@@ -61,9 +72,9 @@ export default function StoreRegister2() {
             const index = /\d/.exec(name)[0] - 1;
             const property = /[a-z]+/i.exec(name)[0];
             setMenuItems((prev) => {
-                const MenuItems = [...prev];
-                MenuItems[index][property] = value;
-                return MenuItems;
+                const menuItems = [...prev];
+                menuItems[index][property] = value;
+                return menuItems;
             });
         }
     };
@@ -96,14 +107,16 @@ export default function StoreRegister2() {
         const isFullMenuItems = menuItems.filter((el) => el.name !== '' && el.price !== '');
         e.preventDefault();
         if (
-            !address ||
             !storeName ||
-            !closedDays ||
+            !address ||
+            !restaurantCategory ||
             !phone ||
             !priceRange ||
             !parkingInfo ||
             businessHours.includes('') ||
-            isFullMenuItems.length !== 3
+            !closedDays ||
+            isFullMenuItems.length !== 3 ||
+            banners.length === 0
         ) {
             alert('입력하지 않은 값이 존재합니다.');
             return;
@@ -126,21 +139,50 @@ export default function StoreRegister2() {
         );
         setClosedDays(sortedDayList);
 
-        const response = await authRequiredAxios({
-            method: 'post',
-            url: `/stores`,
-            data: {
-                phone: phone,
-                menuItems: menuItems,
-                priceRange: priceRange,
-                parkingInfo: parkingInfo,
-                businessHours: businessHours,
-                closedDays: closedDays,
-            },
-        });
-        if (response.status === 200) {
-            alert('가게 정보 수정이 완료되었습니다.');
-            navigate(`/stores/detail/${storeId}`);
+        const formData = new FormData();
+        formData.append('name', storeName);
+
+        formData.append('address[street]', address.street);
+        formData.append('address[city]', address.city);
+        formData.append('address[state]', address.state);
+        formData.append('address[fullAddress]', address.fullAddress);
+        formData.append('address[zipCode]', address.zipCode);
+        formData.append('address[latitude]', address.latitude);
+        formData.append('address[longitude]', address.longitude);
+
+        formData.append('type', restaurantCategory);
+        formData.append('phone', phone);
+        formData.append('priceRange', priceRange);
+        formData.append('parkingInfo', parkingInfo);
+
+        businessHours &&
+            businessHours.forEach((hour, index) => {
+                formData.append(`businessHours[${index}]`, hour);
+            });
+        closedDays &&
+            closedDays.forEach((day, index) => {
+                formData.append(`closedDays[${index}]`, day);
+            });
+        menuItems &&
+            menuItems.forEach((menuItem, index) => {
+                formData.append(`menuItems[${index}][name]`, menuItem.name);
+                formData.append(`menuItems[${index}][price]`, menuItem.price);
+            });
+        banners && banners.forEach((banner) => formData.append('banners', banner));
+
+        try {
+            const response = await authRequiredAxios({
+                method: 'post',
+                url: '/stores',
+                data: formData,
+            });
+
+            if (response.status === 201) {
+                alert('가게 생성이 완료되었습니다.');
+                navigate(`/stores/detail/${response.data}`, { state: { stoerId: response.data } });
+            }
+        } catch (err) {
+            console.error(err);
         }
     };
 
@@ -148,39 +190,37 @@ export default function StoreRegister2() {
         <S.Container>
             <S.RegisterFormTitle>나만 알고 있는 맛집을 등록해보세요!</S.RegisterFormTitle>
             <S.RegisterForm>
+                <S.EditContentBox>
+                    <S.EditTitle>업체명</S.EditTitle>
+                    <S.InputBox
+                        placeholder="업체명을 입력해주세요."
+                        name="storeName"
+                        value={storeName ?? ''}
+                        onChange={handleChange}
+                    />
+                </S.EditContentBox>
                 <S.EditContentBox isSmallGap="true">
-                    <S.EditTitle>가게 등록 확인</S.EditTitle>
+                    <S.EditTitle>업체 주소</S.EditTitle>
                     <S.StoreLocatorRegistration>
                         <S.InputBox
                             placeholder="주소를 검색해주세요."
-                            name="address"
                             value={address.name === '' ? '' : address.fullAddress}
-                            onChange={handleChange}
                             readOnly
                         />
 
                         <DaumPostApi
                             setIsRestaurantRegistered={setIsRestaurantRegistered}
                             setAddress={setAddress}
+                            storeName={storeName}
                             setStoreName={setStoreName}
                         />
                         <S.RegistrationStatusMessage>
-                            {isRestaurantRegistered
-                                ? '이미 등록된 가게입니다. 가게를 검색해주세요.'
-                                : '등록되지 않은 가게 입니다. 추가 정보들을 입력해주세요!'}
+                            {isRestaurantRegistered}
                         </S.RegistrationStatusMessage>
-                        <S.MapImage></S.MapImage>
+                        <S.MapImage>
+                            <KaoKaoMap latitude={address.latitude} longitude={address.longitude} />
+                        </S.MapImage>
                     </S.StoreLocatorRegistration>
-                </S.EditContentBox>
-                <S.EditContentBox>
-                    <S.EditTitle>업체명</S.EditTitle>
-                    <S.InputBox
-                        placeholder="주소 검색을 통해 업체명을 받을 수 있습니다."
-                        name="storeName"
-                        value={storeName ?? ''}
-                        onChange={handleChange}
-                        readOnly
-                    />
                 </S.EditContentBox>
                 <S.EditContentBox>
                     <S.EditTitle>업종</S.EditTitle>
@@ -416,7 +456,7 @@ export default function StoreRegister2() {
                     </div>
                 </S.EditContentBox>
                 <S.EditContentBox isSmallGap={true}>
-                    <S.EditTitle>대표 메뉴</S.EditTitle>
+                    <S.EditTitle className="menu">대표 메뉴</S.EditTitle>
                     <div>
                         <S.MenuNameChart>
                             <thead>
@@ -470,7 +510,6 @@ export default function StoreRegister2() {
                                 <tr>
                                     <S.ChartContent>
                                         <S.ChartInput
-                                            type="number"
                                             placeholder="-"
                                             name="price1"
                                             onChange={handleChange}
@@ -481,7 +520,6 @@ export default function StoreRegister2() {
                                 <tr>
                                     <S.ChartContent>
                                         <S.ChartInput
-                                            type="number"
                                             placeholder="-"
                                             name="price2"
                                             onChange={handleChange}
@@ -492,7 +530,6 @@ export default function StoreRegister2() {
                                 <tr>
                                     <S.ChartContent>
                                         <S.ChartInput
-                                            type="number"
                                             placeholder="-"
                                             name="price3"
                                             onChange={handleChange}
@@ -507,27 +544,15 @@ export default function StoreRegister2() {
                 <S.EditContentBox>
                     <S.EditTitle>대표 이미지</S.EditTitle>
                     <div>
-                        <S.BannerUploadContainer>
-                            <S.BannerImageBtn>이미지 업로드</S.BannerImageBtn>
-                            <S.BannerImageBtn isCancleBtn="true">취소하기</S.BannerImageBtn>
-                            <S.BannerUploadText>
-                                이미지는 최소 1개에서 8개까지 첨부 가능합니다.
-                            </S.BannerUploadText>
-                            <S.BannerUploadImageBox>
-                                {new Array(8).fill('').map((el, idx) => {
-                                    return <S.BannerUploadImagePreview key={idx} />;
-                                })}
-                            </S.BannerUploadImageBox>
-                        </S.BannerUploadContainer>
+                        <BannerUploadContainer setBanners={setBanners} />
                     </div>
                 </S.EditContentBox>
                 <S.DividerLine />
                 <S.EditFormBtns>
-                    <S.EditFormBtn type="button" isOrange={true} onClick={handleSubmit}>
+                    <S.EditFormBtn isOrange={true} onClick={handleSubmit}>
                         등록하기
                     </S.EditFormBtn>
                     <S.EditFormBtn
-                        type="button"
                         onClick={() => {
                             navigate(`/stores/detail/${storeId}`);
                         }}
