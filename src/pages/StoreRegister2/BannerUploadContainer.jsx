@@ -13,6 +13,9 @@ export default function BannerUploadContainer({ setBanners }) {
             return;
         }
 
+        const newUploadImageSrcList = [...uploadImageSrcList];
+        const newUploadImageList = [...uploadImageList];
+
         for (let i = 0; i < uploadImageFiles.length; i++) {
             const file = uploadImageFiles[i];
 
@@ -22,13 +25,12 @@ export default function BannerUploadContainer({ setBanners }) {
                 fileReader.readAsDataURL(file);
                 fileReader.onload = () => {
                     const uploadResult = fileReader.result;
-                    setUploadImageSrcList((prevState) => {
-                        return [...prevState, uploadResult];
-                    });
-                    setUploadImageList((prevState) => {
-                        return [...prevState, file];
-                    });
-                    setBanners(uploadImageList);
+                    newUploadImageSrcList.push(uploadResult);
+                    newUploadImageList.push(file);
+                    setUploadImageSrcList(newUploadImageSrcList);
+                    setUploadImageList(newUploadImageList);
+
+                    setBanners([...newUploadImageList]);
                 };
             } else {
                 alert(`${file.name}파일은 이미 업로드된 이미지입니다.`);

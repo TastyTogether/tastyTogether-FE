@@ -24,7 +24,7 @@ export default function StoreRegister2() {
     });
     const [restaurantCategory, setRestaurantCategory] = useState('');
     const [phone, setPhone] = useState('');
-    const [priceRange, setPriceRange] = useState('');
+    const [newPriceRange, setNewPriceRange] = useState('');
     const [parkingInfo, setParkingInfo] = useState('');
     const [isChecked, setIsChecked] = useState(false);
     const [businessHours, setBusinessHours] = useState(['', '', '', '']);
@@ -34,9 +34,8 @@ export default function StoreRegister2() {
         { name: '', price: '' },
         { name: '', price: '' },
     ]);
-    console.log(menuItems);
     const [banners, setBanners] = useState([]);
-
+    banners.forEach((el) => console.log(el));
     const dayCheckList = ['월', '화', '수', '목', '금', '토', '일', '연중무휴'];
 
     const handleChange = (e) => {
@@ -51,8 +50,8 @@ export default function StoreRegister2() {
         if (name === 'phone') {
             setPhone(value);
         }
-        if (name === 'priceRange') {
-            setPriceRange(value);
+        if (name === 'newPriceRange') {
+            setNewPriceRange(value);
         }
         if (name === 'parkingInfo') {
             setParkingInfo(value);
@@ -111,7 +110,7 @@ export default function StoreRegister2() {
             !address ||
             !restaurantCategory ||
             !phone ||
-            !priceRange ||
+            !newPriceRange ||
             !parkingInfo ||
             businessHours.includes('') ||
             !closedDays ||
@@ -152,8 +151,10 @@ export default function StoreRegister2() {
 
         formData.append('type', restaurantCategory);
         formData.append('phone', phone);
-        formData.append('priceRange', priceRange);
+        formData.append('priceRange', newPriceRange);
         formData.append('parkingInfo', parkingInfo);
+
+        banners && banners.forEach((banner) => formData.append('banners', banner));
 
         businessHours &&
             businessHours.forEach((hour, index) => {
@@ -168,7 +169,6 @@ export default function StoreRegister2() {
                 formData.append(`menuItems[${index}][name]`, menuItem.name);
                 formData.append(`menuItems[${index}][price]`, menuItem.price);
             });
-        banners && banners.forEach((banner) => formData.append('banners', banner));
 
         try {
             const response = await authRequiredAxios({
@@ -182,6 +182,9 @@ export default function StoreRegister2() {
                 navigate(`/stores/detail/${response.data}`, { state: { stoerId: response.data } });
             }
         } catch (err) {
+            for (const x of formData.entries()) {
+                console.log(x);
+            }
             console.error(err);
         }
     };
@@ -299,7 +302,7 @@ export default function StoreRegister2() {
                             1만원대
                             <S.RadioInput
                                 id="price10k"
-                                name="priceRange"
+                                name="newPriceRange"
                                 type="radio"
                                 value="1만원대"
                                 onChange={handleChange}
@@ -310,7 +313,7 @@ export default function StoreRegister2() {
                             2만원대
                             <S.RadioInput
                                 id="price20k"
-                                name="priceRange"
+                                name="newPriceRange"
                                 type="radio"
                                 value="2만원대"
                                 onChange={handleChange}
@@ -321,7 +324,7 @@ export default function StoreRegister2() {
                             3만원대
                             <S.RadioInput
                                 id="price30k"
-                                name="priceRange"
+                                name="newPriceRange"
                                 type="radio"
                                 value="3만원대"
                                 onChange={handleChange}
@@ -332,7 +335,7 @@ export default function StoreRegister2() {
                             4만원대
                             <S.RadioInput
                                 id="price40k"
-                                name="priceRange"
+                                name="newPriceRange"
                                 type="radio"
                                 value="4만원대"
                                 onChange={handleChange}
@@ -343,7 +346,7 @@ export default function StoreRegister2() {
                             기타
                             <S.RadioInput
                                 id="overPrice"
-                                name="priceRange"
+                                name="newPriceRange"
                                 type="radio"
                                 value="기타"
                                 onChange={handleChange}
