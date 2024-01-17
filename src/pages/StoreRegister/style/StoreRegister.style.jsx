@@ -1,79 +1,128 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    min-height: 100vh;
-    margin-top: 100px;
-`;
-
-export const Form = styled.form`
-    width: 800px;
-    margin: 140px auto 40px;
-    border-radius: 10px;
-    background: white;
-    padding: 40px;
+    min-height: 100vh; // 페이지 높이를 100vh로 설정하여 스크롤을 내려야 footer가 보이게 설정
+    margin-top: 100px; // 헤더의 포지션이 fixed여서 margin-top 값을 Header 높이 만큼 설정
+    padding: 69px 0px 69px 0px;
     display: flex;
     flex-direction: column;
-`;
-
-export const ContentBox = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-`;
-
-export const GridBox = styled.div`
-    display: grid;
-    width: 100%;
-    margin: 10px 0px;
-    grid-template-rows: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 1fr;
-    grid-template-columns: 100px auto;
     align-items: center;
 `;
 
-export const Title = styled.div`
-    color: #989797;
-    font-size: 18px;
+export const RegisterFormTitle = styled.div`
+    width: calc(100% - 20px);
+    max-width: 1044px;
+    height: 88px;
+    border-radius: 5px 5px 0px 0px;
+    background-color: #ff914d;
+    color: #fff;
+    text-align: center;
+    font-size: 26px;
     font-weight: 700;
-    width: 100px;
+    line-height: 88px;
+`;
+
+export const RegisterForm = styled.form`
+    width: calc(100% - 20px);
+    max-width: 1044px;
+    margin: 0 auto;
+    height: 50%;
+    border-radius: 0px 0px 5px 5px;
+    background: #fff;
+    padding: 75px 24px 51px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    > div {
+        display: grid;
+        grid-template-columns: 178px auto;
+        grid-template-rows: minmax(24px, auto);
+    }
+`;
+
+export const EditContentBox = styled.div`
+    display: flex;
+    margin-left: 62px;
+    > div {
+        display: flex;
+        gap: ${(props) => (props.isSmallGap ? '14px' : '32px')};
+    }
+`;
+
+export const EditTitle = styled.div`
+    color: #989797;
+    font-size: 20px;
+    font-weight: 700;
+`;
+
+export const StoreLocatorRegistration = styled.div`
+    display: flex;
+    flex-wrap: wrap;
 `;
 
 export const InputBox = styled.input`
-    width: 71%;
-    border: 1px solid gray;
-    border-radius: 10px;
-    font-size: 16px;
-    padding: 10px 15px;
+    width: 448px;
+    height: 32px;
+    border: 1px solid #989797;
+    border-radius: 5px;
+    margin-top: -4px;
+    text-indent: 18px;
+    line-height: 32px;
+    font-size: 15px;
+
     &:focus {
-        outline: 2px solid var(--color-accent);
+        outline: 2px solid rgba(255, 145, 77, 0.6);
     }
     &::placeholder {
         color: #989797;
-        font-size: 16px;
+        font-size: 15px;
+        text-indent: 18px;
     }
-    &::-webkit-inner-spin-button {
-        appearance: none;
-        -moz-appearance: none;
-        -webkit-appearance: none;
-    }
+`;
+
+export const SearchBtn = styled.label`
+    width: 78px;
+    height: 32px;
+    border: 1px solid #ff914d;
+    border-radius: 5px;
+    margin-top: -4px;
+    background: #ff914d;
+    color: #fff;
+`;
+
+export const MapPopup = styled.div`
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100;
+`;
+
+export const MapImage = styled.div`
+    width: 537px;
+    height: 274px;
+    background: #ff914d;
+`;
+
+export const RegistrationStatusMessage = styled.div`
+    color: #ff914d;
+    font-size: 15px;
 `;
 
 export const InputLabel = styled.label`
     display: flex;
-    align-items: center;
     gap: 11px;
     color: #989797;
+    line-height: 18px;
+    font-size: 17px;
     font-weight: 400;
-    cursor: pointer;
 `;
 
 export const RadioDesign = styled.div`
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     background: #d9d9d9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `;
 
 export const RadioInput = styled.input`
@@ -82,39 +131,41 @@ export const RadioInput = styled.input`
         &::after {
             content: '';
             display: block;
+            margin: 4px;
             border-radius: 50%;
-            width: 14px;
-            height: 14px;
-            background-color: var(--color-accent);
+            width: 16px;
+            height: 16px;
+            background-color: #ff914d;
         }
     }
 `;
 
 export const TimeInput = styled.input`
+    width: 42px;
+    height: 29px;
     border: none;
-    outline: none;
     border-bottom: 1px solid #989797;
+    margin-top: -6px;
     text-align: center;
-    font-size: 16px;
-    color: var(--color-accent);
-    width: 50px;
-    margin: 0px 5px;
-    padding-bottom: 4px;
-
+    font-size: 15px;
+    color: #ff9c5f;
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
+    &:focus {
+        outline: none;
+    }
     &::placeholder {
         color: #989797;
-        font-size: 16px;
+        font-size: 15px;
     }
 `;
 
 export const ClosedDayDesign = styled.div`
-    width: 22px;
-    height: 22px;
+    width: 21px;
+    height: 21px;
     border-radius: 5px;
     border: 1px solid #989797;
 `;
@@ -127,23 +178,24 @@ export const ClosedDayInput = styled.input`
             content: '✔';
             display: block;
             text-align: center;
-            color: var(--color-accent);
+            color: #ff914d;
         }
     }
 `;
 
 export const MenuNameChart = styled.table`
-    width: 300px;
-    height: 144px;
-    border: 1px solid var(--color-accent);
+    width: 275px;
+    height: 168px;
     border-collapse: collapse;
 `;
 
 export const ChartHead = styled.th`
     color: #fff;
     font-size: 15px;
-    font-weight: bold;
-    background-color: var(--color-accent);
+    font-weight: 400;
+    background-color: #ff914d;
+    border-top-left-radius: ${(props) => (props.isLeft ? '5px' : '0px')};
+    border-top-right-radius: ${(props) => (props.isLeft ? '0px' : '5px')};
     height: 36px;
 `;
 
@@ -151,7 +203,7 @@ export const ChartContent = styled.td`
     border: 1px solid #989797;
     text-align: center;
     color: #989797;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
 
     &:first-child {
@@ -160,15 +212,18 @@ export const ChartContent = styled.td`
 `;
 
 export const ChartInput = styled.input`
+    height: 42px;
     border: none;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 400;
     text-align: center;
-    outline: none;
     &::placeholder {
         color: #989797;
-        font-size: 16px;
+        font-size: 13px;
         text-align: center;
+    }
+    &:focus {
+        outline: none;
     }
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
@@ -177,50 +232,29 @@ export const ChartInput = styled.input`
     }
 `;
 
-export const DividerLine = styled.div`
-    width: 100%;
+export const DividerLine = styled.hr`
+    width: 90%;
     height: 1px;
-    margin-top: 30px;
     background: #d9d9d9;
-`;
-
-export const EditFormBtns = styled.div`
-    margin-top: 30px;
-    padding-top: 30px;
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid lightgray;
+    border: 0;
+    align-self: center;
 `;
 
 export const EditFormBtn = styled.button`
+    width: 211px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid ${(props) => (props.isOrange ? '#ff914d' : ' #989797')};
+    background: ${(props) => (props.isOrange ? '#ff914d' : '#FFF')};
     text-align: center;
-    border: none;
-    width: 30%;
-    height: 100%;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 10px;
-    &:first-child {
-        border: 1px solid lightgrey;
-        background-color: #fff;
-        color: gray;
-        transition: all 250ms ease-out;
-        &:hover {
-            background-color: lightgrey;
-            color: white;
-        }
-    }
-    &:last-child {
-        background-color: var(--color-accent);
-        color: white;
-        transition: all 250ms ease-out;
-        &:hover {
-            color: var(--color-accent);
-            background-color: white;
-            border: 1px solid var(--color-accent);
-        }
-    }
+    color: ${(props) => (props.isOrange ? '#fff' : '#989797')};
+    font-size: 17px;
+    font-weight: 400;
+`;
+
+export const EditFormBtns = styled.div`
+    display: flex;
+    padding-left: 250px;
+    padding-right: 250px;
+    justify-content: space-between;
 `;

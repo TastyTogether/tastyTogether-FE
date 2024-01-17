@@ -19,7 +19,6 @@ import SearchResult from './pages/SearchResult/SearchResult';
 import StoreDetailEdit from './pages/StoreDetailEdit/StoreDetailEdit';
 import MyPage from './pages/MyPage/MyPage';
 import RequireLogin from './components/RequireLogin/RequireLogin';
-import StoreRegister2 from './pages/StoreRegister2/StoreRegister2';
 
 const router = createBrowserRouter([
     {
@@ -39,7 +38,7 @@ const router = createBrowserRouter([
             { path: '/review/:storeId', element: <CreateReview /> }, // 진규
             { path: '/stores/detail/:id', element: <StoreDetail /> }, // 수연
             { path: '/stores/detail/:id/edit', element: <StoreDetailEdit /> }, // 수연
-            { path: '/stores/register2', element: <StoreRegister2 /> }, // 수연
+            { path: '/stores/register', element: <StoreRegister /> }, // 수연
             { path: '/users/login', element: <UserLogin /> }, // 윤렬
             { path: '/users/signup', element: <UserSignUp /> }, // 윤렬
             { path: '/post', element: <Board /> }, // 화경

@@ -25,6 +25,10 @@ export const BannerUploadInput = styled.input`
     display: none;
 `;
 
+export const CancleAllUploadButton = styled.input`
+    display: none;
+`;
+
 export const BannerUploadNotification = styled.div`
     color: #989797;
     font-size: 13px;
@@ -43,8 +47,37 @@ export const BannerUploadImageBox = styled.div`
     flex-wrap: wrap;
 `;
 
-export const BannerUploadImagePreview = styled.img`
+export const UploadImagePreviewContainer = styled.div`
     width: 117px;
     height: 103px;
-    background-color: black;
+    position: relative;
+
+    &:hover {
+        opacity: 30%;
+        button {
+            display: block;
+        }
+    }
+`;
+
+export const UploadImagePreview = styled.img`
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+`;
+
+export const uploadImageDeleteButton = styled.button`
+    width: 25px;
+    height: 25px;
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    top: 3px;
+    right: 7px;
+`;
+
+export const DeleteButtonIcon = styled.img`
+    width: 100%;
+    height: 100%;
 `;

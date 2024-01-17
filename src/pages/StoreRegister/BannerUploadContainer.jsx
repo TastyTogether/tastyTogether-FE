@@ -21,8 +21,8 @@ export default function BannerUploadContainer({ setBanners }) {
 
             if (isNewUploadFile(file)) {
                 const fileReader = new FileReader();
-
                 fileReader.readAsDataURL(file);
+
                 fileReader.onload = () => {
                     const uploadResult = fileReader.result;
                     newUploadImageSrcList.push(uploadResult);
@@ -42,6 +42,23 @@ export default function BannerUploadContainer({ setBanners }) {
         return uploadImageList.every((el) => el.name !== uploadImageFile.name);
     };
 
+    const cancleAllUpload = () => {
+        setUploadImageList([]);
+        setUploadImageSrcList([]);
+        setBanners([]);
+    };
+
+    const deleteUploadImage = (idx) => {
+        const newUploadImageSrcList = [...uploadImageSrcList];
+        newUploadImageSrcList.splice(idx, 1);
+        setUploadImageSrcList(newUploadImageSrcList);
+
+        const newUploadImageList = [...uploadImageList];
+        newUploadImageList.splice(idx, 1);
+        setUploadImageList(newUploadImageList);
+        setBanners(newUploadImageList);
+    };
+
     return (
         <S.BannerUploadContainer>
             <S.BannerUploadLabel htmlFor="imageUpload">이미지 업로드</S.BannerUploadLabel>
@@ -52,14 +69,25 @@ export default function BannerUploadContainer({ setBanners }) {
                 multiple
                 onChange={handlImageUpload}
             />
-            <S.BannerUploadLabel isCancleBtn="true">취소하기</S.BannerUploadLabel>
+            <S.BannerUploadLabel htmlFor="uploadCancle" isCancleBtn="true">
+                취소하기
+            </S.BannerUploadLabel>
+            <S.CancleAllUploadButton id="uploadCancle" type="button" onClick={cancleAllUpload} />
             <S.BannerUploadNotification>
                 이미지는 최소 1개에서 8개까지 첨부 가능합니다.
             </S.BannerUploadNotification>
             <S.BannerUploadImageBox>
                 {uploadImageSrcList.map((el, idx) => {
                     return (
-                        <S.BannerUploadImagePreview key={idx} src={el} alt="uploadImagePreview" />
+                        <S.UploadImagePreviewContainer key={idx}>
+                            <S.UploadImagePreview key={idx} src={el} alt="uploadImagePreview" />
+                            <S.uploadImageDeleteButton
+                                type="button"
+                                onClick={() => deleteUploadImage(idx)}
+                            >
+                                <S.DeleteButtonIcon src={'/imgs/x.png'} />
+                            </S.uploadImageDeleteButton>
+                        </S.UploadImagePreviewContainer>
                     );
                 })}
             </S.BannerUploadImageBox>

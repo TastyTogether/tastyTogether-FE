@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from './style/StoreDetailEdit.style';
 import useAxios from '../../hooks/useAxios';
-import { isValidPhoneNumber, isValidHour, isvalidMinute } from '../../utils/regList';
+import { isValidPhoneNumber, isValidHour, isValidMinute } from '../../utils/regList';
 
 export default function StoreDetailEdit() {
     const { authRequiredAxios } = useAxios('application/json');
@@ -122,7 +122,7 @@ export default function StoreDetailEdit() {
             alert('시간 형식에 맞게 작성해주세요.');
             return;
         }
-        if (!isvalidMinute(newBusinessHours[1], newBusinessHours[3])) {
+        if (!isValidMinute(newBusinessHours[1], newBusinessHours[3])) {
             alert('분 형식에 맞게 작성해주세요.');
             return;
         }
