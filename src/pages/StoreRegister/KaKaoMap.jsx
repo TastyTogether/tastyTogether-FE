@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { StaticMap } from 'react-kakao-maps-sdk';
 
 export default function KaoKaoMap({ latitude, longitude }) {
     useEffect(() => {
