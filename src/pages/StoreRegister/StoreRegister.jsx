@@ -2,102 +2,89 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './style/StoreRegister.style';
 import useAxios from '../../hooks/useAxios';
-import { isValidPhoneNumber, isValidHour, isvalidMinute } from '../../utils/regList';
-import DaumPost from '../../components/storeRegister/DaumPost';
-import TypeModalButton from '../../components/storeRegister/TypeModalButton';
-import StoreImage from '../../components/storeRegister/StoreImage';
+import { isValidPhoneNumber, isValidHour, isValidMinute } from '../../utils/regList';
+import DaumPostApi from './DaumPostApi';
+import KaoKaoMap from './KaKaoMap';
+import BannerUploadContainer from './BannerUploadContainer';
 
 export default function StoreRegister() {
     const { authRequiredAxios } = useAxios('multipart/form-data');
     const navigate = useNavigate();
-    const [name, setName] = useState('');
+    const [isRestaurantRegistered, setIsRestaurantRegistered] = useState('');
+    const [storeName, setStoreName] = useState('');
     const [address, setAddress] = useState({
         street: '',
         fullAddress: '',
         city: '',
         state: '',
-        zipcode: '',
+        zipCode: '',
         name: '',
         latitude: '',
         longitude: '',
     });
-    const [type, setType] = useState('');
-    const [newPhone, setNewPhone] = useState('');
+    const [restaurantCategory, setRestaurantCategory] = useState('');
+    const [phone, setPhone] = useState('');
     const [newPriceRange, setNewPriceRange] = useState('');
-    const [newClosedDays, setNewClosedDays] = useState('');
-    const [newParkingInfo, setNewParkingInfo] = useState('');
+    const [parkingInfo, setParkingInfo] = useState('');
     const [isChecked, setIsChecked] = useState(false);
-    const [newBusinessHours, setNewBusinessHours] = useState(['', '', '', '']);
-    const [newMenuItems, setNewMenuItems] = useState([
+    const [businessHours, setBusinessHours] = useState(['', '', '', '']);
+    const [closedDays, setClosedDays] = useState('');
+    const [menuItems, setMenuItems] = useState([
         { name: '', price: '' },
         { name: '', price: '' },
         { name: '', price: '' },
     ]);
     const [banners, setBanners] = useState([]);
-    const [isAddressRegistered, setIsAddressRegistered] = useState(false);
-
+    console.log(banners);
     const dayCheckList = ['월', '화', '수', '목', '금', '토', '일', '연중무휴'];
 
     const handleChange = (e) => {
         const { name, value, id } = e.target;
-        if (name === 'newPhone') {
-            setNewPhone(value);
+
+        if (name === 'storeName') {
+            setStoreName(value);
+        }
+        if (name === 'restaurantCategory') {
+            setRestaurantCategory(value);
+        }
+        if (name === 'phone') {
+            setPhone(value);
         }
         if (name === 'newPriceRange') {
             setNewPriceRange(value);
         }
-        if (name === 'newParkingInfo') {
-            setNewParkingInfo(value);
+        if (name === 'parkingInfo') {
+            setParkingInfo(value);
         }
-        if (name === 'newBusinessHours') {
+        if (name === 'businessHours') {
             if (id === 'openHour') {
-                setNewBusinessHours((prevHours) => [
-                    value,
-                    prevHours[1],
-                    prevHours[2],
-                    prevHours[3],
-                ]);
+                setBusinessHours((prevHours) => [value, prevHours[1], prevHours[2], prevHours[3]]);
             } else if (id === 'openMinutes') {
-                setNewBusinessHours((prevHours) => [
-                    prevHours[0],
-                    value,
-                    prevHours[2],
-                    prevHours[3],
-                ]);
+                setBusinessHours((prevHours) => [prevHours[0], value, prevHours[2], prevHours[3]]);
             } else if (id === 'closeHour') {
-                setNewBusinessHours((prevHours) => [
-                    prevHours[0],
-                    prevHours[1],
-                    value,
-                    prevHours[3],
-                ]);
+                setBusinessHours((prevHours) => [prevHours[0], prevHours[1], value, prevHours[3]]);
             } else if (id === 'closeMinutes') {
-                setNewBusinessHours((prevHours) => [
-                    prevHours[0],
-                    prevHours[1],
-                    prevHours[2],
-                    value,
-                ]);
+                setBusinessHours((prevHours) => [prevHours[0], prevHours[1], prevHours[2], value]);
             }
         }
         if (/^(name|price)/i.test(name)) {
             const index = /\d/.exec(name)[0] - 1;
             const property = /[a-z]+/i.exec(name)[0];
-            setNewMenuItems((prev) => {
-                const newMenuItems = [...prev];
-                newMenuItems[index][property] = value;
-                return newMenuItems;
+            setMenuItems((prev) => {
+                const menuItems = [...prev];
+                menuItems[index][property] = value;
+                return menuItems;
             });
         }
     };
 
     const checkedDayHandler = (value, isChecked) => {
         if (isChecked) {
-            setNewClosedDays((prev) => [...prev, value]);
+            setClosedDays((prev) => [...prev, value]);
             return;
         }
-        if (!isChecked && newClosedDays.includes(value)) {
-            setNewClosedDays(newClosedDays.filter((day) => day !== value));
+        if (!isChecked && closedDays.includes(value)) {
+            setClosedDays(closedDays.filter((day) => day !== value));
             return;
         }
         return;
@@ -107,73 +94,52 @@ export default function StoreRegister() {
         setIsChecked(!isChecked);
         if (value === '연중무휴') {
             if (e.target.checked) {
-                setNewClosedDays([]);
+                setClosedDays([]);
             }
-        } else if (newClosedDays[0] === '연중무휴') {
-            setNewClosedDays([]);
+        } else if (closedDays[0] === '연중무휴') {
+            setClosedDays([]);
         }
         checkedDayHandler(value, e.target.checked);
     };
+
     const handleSubmit = async (e) => {
-        const isFullMenuItems = newMenuItems.filter((el) => el.name !== '' && el.price !== '');
+        const isFullMenuItems = menuItems.filter((el) => el.name !== '' && el.price !== '');
         e.preventDefault();
-        if (isAddressRegistered) {
-            alert('중복된 가게입니다.');
-            return;
-        }
         if (
-            !name ||
+            !storeName ||
             !address ||
-            !type ||
-            banners.length === 0 ||
-            !newClosedDays ||
-            !newPhone ||
+            !restaurantCategory ||
+            !phone ||
             !newPriceRange ||
-            !newParkingInfo ||
-            newBusinessHours.includes('') ||
-            isFullMenuItems.length !== 3
+            !parkingInfo ||
+            businessHours.includes('') ||
+            !closedDays ||
+            isFullMenuItems.length !== 3 ||
+            banners.length === 0
         ) {
             alert('입력하지 않은 값이 존재합니다.');
             return;
         }
-        if (!isValidPhoneNumber(newPhone)) {
+        if (!isValidPhoneNumber(phone)) {
             alert('전화번호 형식이 일치하지 않습니다.');
             return;
         }
-        if (!isValidHour(newBusinessHours[0], newBusinessHours[2])) {
+        if (!isValidHour(businessHours[0], businessHours[2])) {
             alert('시간 형식에 맞게 작성해주세요.');
             return;
         }
-        if (!isvalidMinute(newBusinessHours[1], newBusinessHours[3])) {
+        if (!isValidMinute(businessHours[1], businessHours[3])) {
             alert('분 형식에 맞게 작성해주세요.');
             return;
         }
-        const sortedDayList = newClosedDays.sort(
+
+        const sortedDayList = closedDays.sort(
             (a, b) => dayCheckList.indexOf(a) - dayCheckList.indexOf(b),
         );
-        setNewClosedDays(sortedDayList);
+        setClosedDays(sortedDayList);
 
         const formData = new FormData();
-        formData.append('name', name);
-        formData.append('type', type);
-        formData.append('phone', newPhone);
-        formData.append('priceRange', newPriceRange);
-        formData.append('parkingInfo', newParkingInfo);
-
-        banners && banners.forEach((banner) => formData.append('banners', banner));
-        newMenuItems &&
-            newMenuItems.forEach((menuItem, index) => {
-                formData.append(`menuItems[${index}][name]`, menuItem.name);
-                formData.append(`menuItems[${index}][price]`, menuItem.price);
-            });
-        newBusinessHours &&
-            newBusinessHours.forEach((hour, index) => {
-                formData.append(`businessHours[${index}]`, hour);
-            });
-        newClosedDays &&
-            newClosedDays.forEach((day, index) => {
-                formData.append(`closedDays[${index}]`, day);
-            });
+        formData.append('name', storeName);
 
         formData.append('address[street]', address.street);
         formData.append('address[city]', address.city);
@@ -182,6 +148,27 @@ export default function StoreRegister() {
         formData.append('address[zipCode]', address.zipCode);
         formData.append('address[latitude]', address.latitude);
         formData.append('address[longitude]', address.longitude);
+
+        formData.append('type', restaurantCategory);
+        formData.append('phone', phone);
+        formData.append('priceRange', newPriceRange);
+        formData.append('parkingInfo', parkingInfo);
+
+        banners && banners.forEach((banner) => formData.append('banners', banner));
+
+        businessHours &&
+            businessHours.forEach((hour, index) => {
+                formData.append(`businessHours[${index}]`, hour);
+            });
+        closedDays &&
+            closedDays.forEach((day, index) => {
+                formData.append(`closedDays[${index}]`, day);
+            });
+        menuItems &&
+            menuItems.forEach((menuItem, index) => {
+                formData.append(`menuItems[${index}][name]`, menuItem.name);
+                formData.append(`menuItems[${index}][price]`, menuItem.price);
+            });
 
         try {
             const response = await authRequiredAxios({
@@ -201,33 +188,117 @@ export default function StoreRegister() {
 
     return (
         <S.Container>
-            <S.Form>
-                {
-                    <DaumPost
-                        setName={setName}
-                        address={address}
-                        setAddress={setAddress}
-                        isAddressRegistered={isAddressRegistered}
-                        setIsAddressRegistered={setIsAddressRegistered}
-                    />
-                }
-                <TypeModalButton setType={setType} />
-                <S.GridBox>
-                    <S.Title>전화번호</S.Title>
+            <S.RegisterFormTitle>나만 알고 있는 맛집을 등록해보세요!</S.RegisterFormTitle>
+            <S.RegisterForm>
+                <S.EditContentBox>
+                    <S.EditTitle>업체명</S.EditTitle>
                     <S.InputBox
-                        placeholder="전화번호를 입력해주세요 (0000-1234-1234)"
-                        isPhone={true}
-                        name="newPhone"
-                        value={newPhone ?? ''}
+                        placeholder="업체명을 입력해주세요."
+                        name="storeName"
+                        value={storeName ?? ''}
                         onChange={handleChange}
                     />
+                </S.EditContentBox>
+                <S.EditContentBox isSmallGap="true">
+                    <S.EditTitle>업체 주소</S.EditTitle>
+                    <S.StoreLocatorRegistration>
+                        <S.InputBox
+                            placeholder="주소를 검색해주세요."
+                            value={address.name === '' ? '' : address.fullAddress}
+                            readOnly
+                        />
 
-                    <S.Title>가격대</S.Title>
-                    <S.ContentBox>
-                        <S.InputLabel htmlFor="radio1">
+                        <DaumPostApi
+                            setIsRestaurantRegistered={setIsRestaurantRegistered}
+                            setAddress={setAddress}
+                            storeName={storeName}
+                            setStoreName={setStoreName}
+                        />
+                        <S.RegistrationStatusMessage>
+                            {isRestaurantRegistered}
+                        </S.RegistrationStatusMessage>
+                        <S.MapImage>
+                            <KaoKaoMap latitude={address.latitude} longitude={address.longitude} />
+                        </S.MapImage>
+                    </S.StoreLocatorRegistration>
+                </S.EditContentBox>
+                <S.EditContentBox>
+                    <S.EditTitle>업종</S.EditTitle>
+                    <div>
+                        <S.InputLabel htmlFor="korean">
+                            한식
+                            <S.RadioInput
+                                id="korean"
+                                name="restaurantCategory"
+                                type="radio"
+                                value="한식"
+                                onChange={handleChange}
+                            ></S.RadioInput>
+                            <S.RadioDesign></S.RadioDesign>
+                        </S.InputLabel>
+                        <S.InputLabel htmlFor="western">
+                            양식
+                            <S.RadioInput
+                                id="western"
+                                name="restaurantCategory"
+                                type="radio"
+                                value="양식"
+                                onChange={handleChange}
+                            />
+                            <S.RadioDesign></S.RadioDesign>
+                        </S.InputLabel>
+                        <S.InputLabel htmlFor="chinese">
+                            중식
+                            <S.RadioInput
+                                id="chinese"
+                                name="restaurantCategory"
+                                type="radio"
+                                value="중식"
+                                onChange={handleChange}
+                            />
+                            <S.RadioDesign></S.RadioDesign>
+                        </S.InputLabel>
+                        <S.InputLabel htmlFor="asian">
+                            아시안
+                            <S.RadioInput
+                                id="asian"
+                                name="restaurantCategory"
+                                type="radio"
+                                value="아시안"
+                                onChange={handleChange}
+                            />
+                            <S.RadioDesign></S.RadioDesign>
+                        </S.InputLabel>
+                        <S.InputLabel htmlFor="cafe">
+                            카페∙디저트
+                            <S.RadioInput
+                                id="cafe"
+                                name="restaurantCategory"
+                                type="radio"
+                                value="카페.디저트"
+                                onChange={handleChange}
+                            />
+                            <S.RadioDesign></S.RadioDesign>
+                        </S.InputLabel>
+                    </div>
+                </S.EditContentBox>
+                <S.EditContentBox>
+                    <S.EditTitle>전화번호</S.EditTitle>
+                    <S.InputBox
+                        placeholder="가게의 전화번호를 입력하세요.(0000-0000-0000)"
+                        isPhone={true}
+                        name="phone"
+                        value={phone ?? ''}
+                        onChange={handleChange}
+                    />
+                </S.EditContentBox>
+                <S.EditContentBox>
+                    <S.EditTitle>가격대</S.EditTitle>
+                    <div>
+                        <S.InputLabel htmlFor="price10k">
                             1만원대
                             <S.RadioInput
-                                id="radio1"
+                                id="price10k"
                                 name="newPriceRange"
                                 type="radio"
                                 value="1만원대"
@@ -235,10 +306,10 @@ export default function StoreRegister() {
                             ></S.RadioInput>
                             <S.RadioDesign></S.RadioDesign>
                         </S.InputLabel>
-                        <S.InputLabel htmlFor="radio2">
+                        <S.InputLabel htmlFor="price20k">
                             2만원대
                             <S.RadioInput
-                                id="radio2"
+                                id="price20k"
                                 name="newPriceRange"
                                 type="radio"
                                 value="2만원대"
@@ -246,10 +317,10 @@ export default function StoreRegister() {
                             />
                             <S.RadioDesign></S.RadioDesign>
                         </S.InputLabel>
-                        <S.InputLabel htmlFor="radio3">
+                        <S.InputLabel htmlFor="price30k">
                             3만원대
                             <S.RadioInput
-                                id="radio3"
+                                id="price30k"
                                 name="newPriceRange"
                                 type="radio"
                                 value="3만원대"
@@ -257,10 +328,10 @@ export default function StoreRegister() {
                             />
                             <S.RadioDesign></S.RadioDesign>
                         </S.InputLabel>
-                        <S.InputLabel htmlFor="radio4">
+                        <S.InputLabel htmlFor="price40k">
                             4만원대
                             <S.RadioInput
-                                id="radio4"
+                                id="price40k"
                                 name="newPriceRange"
                                 type="radio"
                                 value="4만원대"
@@ -268,10 +339,10 @@ export default function StoreRegister() {
                             />
                             <S.RadioDesign></S.RadioDesign>
                         </S.InputLabel>
-                        <S.InputLabel htmlFor="radio5">
+                        <S.InputLabel htmlFor="overPrice">
                             기타
                             <S.RadioInput
-                                id="radio5"
+                                id="overPrice"
                                 name="newPriceRange"
                                 type="radio"
                                 value="기타"
@@ -279,15 +350,16 @@ export default function StoreRegister() {
                             />
                             <S.RadioDesign></S.RadioDesign>
                         </S.InputLabel>
-                    </S.ContentBox>
-
-                    <S.Title>주차</S.Title>
-                    <S.ContentBox>
+                    </div>
+                </S.EditContentBox>
+                <S.EditContentBox>
+                    <S.EditTitle>주차</S.EditTitle>
+                    <div>
                         <S.InputLabel htmlFor="freePark">
-                            무료 주차 가능
+                            무료주차 가능
                             <S.RadioInput
                                 id="freePark"
-                                name="newParkingInfo"
+                                name="parkingInfo"
                                 type="radio"
                                 value="무료주차 가능"
                                 onChange={handleChange}
@@ -295,10 +367,10 @@ export default function StoreRegister() {
                             <S.RadioDesign></S.RadioDesign>
                         </S.InputLabel>
                         <S.InputLabel htmlFor="paidPark">
-                            유료 주차 가능
+                            유료주차 가능
                             <S.RadioInput
                                 id="paidPark"
-                                name="newParkingInfo"
+                                name="parkingInfo"
                                 type="radio"
                                 value="유료주차 가능"
                                 onChange={handleChange}
@@ -309,23 +381,24 @@ export default function StoreRegister() {
                             주차 불가
                             <S.RadioInput
                                 id="nonePark"
-                                name="newParkingInfo"
+                                name="parkingInfo"
                                 type="radio"
                                 value="주차 불가"
                                 onChange={handleChange}
                             />
                             <S.RadioDesign></S.RadioDesign>
                         </S.InputLabel>
-                    </S.ContentBox>
-
-                    <S.Title>영업시간</S.Title>
-                    <S.ContentBox isSmallGap={true}>
+                    </div>
+                </S.EditContentBox>
+                <S.EditContentBox isSmallGap={true}>
+                    <S.EditTitle>영업시간</S.EditTitle>
+                    <div>
                         <S.InputLabel htmlFor="openHour">
-                            오전
                             <S.TimeInput
                                 id="openHour"
-                                name="newBusinessHours"
+                                name="businessHours"
                                 placeholder="00"
+                                type="number"
                                 onChange={handleChange}
                             />
                             시
@@ -333,19 +406,19 @@ export default function StoreRegister() {
                         <S.InputLabel htmlFor="openMinutes">
                             <S.TimeInput
                                 id="openMinutes"
-                                name="newBusinessHours"
+                                name="businessHours"
                                 placeholder="00"
+                                type="number"
                                 onChange={handleChange}
                             />
-                            분
+                            분 ~
                         </S.InputLabel>
-                        <span>~</span>
                         <S.InputLabel htmlFor="closeHour">
-                            오후
                             <S.TimeInput
                                 id="closeHour"
-                                name="newBusinessHours"
+                                name="businessHours"
                                 placeholder="00"
+                                type="number"
                                 onChange={handleChange}
                             />
                             시
@@ -353,24 +426,25 @@ export default function StoreRegister() {
                         <S.InputLabel htmlFor="closeMinutes">
                             <S.TimeInput
                                 id="closeMinutes"
-                                name="newBusinessHours"
+                                name="businessHours"
                                 placeholder="00"
                                 type="number"
                                 onChange={handleChange}
                             />
                             분
                         </S.InputLabel>
-                    </S.ContentBox>
-
-                    <S.Title>휴무일</S.Title>
-                    <S.ContentBox>
+                    </div>
+                </S.EditContentBox>
+                <S.EditContentBox>
+                    <S.EditTitle>휴무일</S.EditTitle>
+                    <div>
                         {dayCheckList.map((el, idx) => {
                             return (
                                 <S.InputLabel htmlFor={el} key={idx}>
                                     <S.ClosedDayInput
                                         id={el}
                                         name="closedDays"
-                                        checked={newClosedDays.includes(el)}
+                                        checked={closedDays.includes(el)}
                                         onChange={(e) => checkHandler(e, el)}
                                         type="checkbox"
                                     />
@@ -379,22 +453,26 @@ export default function StoreRegister() {
                                 </S.InputLabel>
                             );
                         })}
-                    </S.ContentBox>
-
-                    <S.Title className="menu">대표 메뉴</S.Title>
-                    <S.ContentBox isSmallGap={true}>
+                    </div>
+                </S.EditContentBox>
+                <S.EditContentBox isSmallGap={true}>
+                    <S.EditTitle className="menu">대표 메뉴</S.EditTitle>
+                    <div>
                         <S.MenuNameChart>
                             <thead>
                                 <tr>
-                                    <S.ChartHead scope="col">대표 메뉴</S.ChartHead>
+                                    <S.ChartHead scope="col" isLeft={true}>
+                                        대표 메뉴
+                                    </S.ChartHead>
                                 </tr>
                             </thead>
+
                             <tbody>
                                 <tr>
                                     <S.ChartContent>
                                         <S.ChartInput
                                             type="text"
-                                            placeholder="-"
+                                            placeholder="대표메뉴 3개를 입력해주세요"
                                             name="name1"
                                             onChange={handleChange}
                                         />
@@ -461,20 +539,28 @@ export default function StoreRegister() {
                                 </tr>
                             </tbody>
                         </S.MenuNameChart>
-                    </S.ContentBox>
-                </S.GridBox>
-
-                <StoreImage setBanners={setBanners} />
-
+                    </div>
+                </S.EditContentBox>
+                <S.EditContentBox>
+                    <S.EditTitle>대표 이미지</S.EditTitle>
+                    <div>
+                        <BannerUploadContainer setBanners={setBanners} />
+                    </div>
+                </S.EditContentBox>
+                <S.DividerLine />
                 <S.EditFormBtns>
-                    <S.EditFormBtn type="button" onClick={() => navigate('/')}>
-                        취소하기
-                    </S.EditFormBtn>
-                    <S.EditFormBtn type="button" onClick={handleSubmit}>
+                    <S.EditFormBtn isOrange={true} onClick={handleSubmit}>
                         등록하기
                     </S.EditFormBtn>
+                    <S.EditFormBtn
+                        onClick={() => {
+                            navigate(`/stores/detail/${storeId}`);
+                        }}
+                    >
+                        취소하기
+                    </S.EditFormBtn>
                 </S.EditFormBtns>
-            </S.Form>
+            </S.RegisterForm>
         </S.Container>
     );
 }
