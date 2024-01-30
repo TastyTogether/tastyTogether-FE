@@ -48,10 +48,13 @@ export const Search = styled.input`
 export const SubmitBtn = styled.button`
     width: 80px;
     height: 60px;
-    font-size: 24px;
+    font-size: 26px;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     border: 2px solid var(--color-accent);
     background-color: var(--color-accent);
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

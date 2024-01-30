@@ -1,7 +1,6 @@
-import * as S from './style/FilteredMap.style';
 import React, { useEffect } from 'react';
 
-const FilteredMap = ({ currentPageItems }) => {
+export default function SearchMap({ currentPageItems }) {
     useEffect(() => {
         if (currentPageItems.length === 0) return;
 
@@ -56,7 +55,22 @@ const FilteredMap = ({ currentPageItems }) => {
         initMap();
     }, [currentPageItems]);
 
-    return <S.Map id="map" />;
-};
-
-export default FilteredMap;
+    return (
+        <section
+            style={{
+                width: '100%',
+                height: '100%',
+                padding: '0 2rem',
+            }}
+        >
+            <div
+                style={{
+                    width: '100%',
+                    height: '300px',
+                    borderRadius: '1rem',
+                }}
+                id="map"
+            />
+        </section>
+    );
+}

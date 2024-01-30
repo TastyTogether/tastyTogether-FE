@@ -15,10 +15,15 @@ import PostUpdate from './pages/PostUpdate/PostUpdate';
 import PostDetail from './pages/PostDetail/PostDetail';
 import CreateReview from './pages/CreateReview/CreateReview';
 import StoreRegister from './pages/StoreRegister/StoreRegister';
-import SearchResult from './pages/SearchResult/SearchResult';
 import StoreDetailEdit from './pages/StoreDetailEdit/StoreDetailEdit';
 import MyPage from './pages/MyPage/MyPage';
 import RequireLogin from './components/RequireLogin/RequireLogin';
+import StoreRegister2 from './pages/StoreRegister2/StoreRegister2';
+import Search from './pages/NewSearch/Search';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import SearchResult from './pages/SearchResult/SearchResult';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
     {
@@ -67,7 +72,8 @@ const router = createBrowserRouter([
                     </RequireLogin>
                 ),
             }, // 혜지 수연
-            { path: '/stores/search', element: <SearchResult /> }, // 혜지
+            // { path: '/stores/search/:keyword', element: <SearchResult /> }, // 혜지
+            { path: '/stores/search/:keyword', element: <Search /> }, // 진규
         ],
     },
 ]);
@@ -75,7 +81,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+        </QueryClientProvider>
     </React.StrictMode>,
 );
 
