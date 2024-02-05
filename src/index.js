@@ -18,7 +18,6 @@ import StoreRegister from './pages/StoreRegister/StoreRegister';
 import StoreDetailEdit from './pages/StoreDetailEdit/StoreDetailEdit';
 import MyPage from './pages/MyPage/MyPage';
 import RequireLogin from './components/RequireLogin/RequireLogin';
-import StoreRegister2 from './pages/StoreRegister2/StoreRegister2';
 import Search from './pages/NewSearch/Search';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import SearchResult from './pages/SearchResult/SearchResult';
