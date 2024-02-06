@@ -394,6 +394,7 @@ export default function StoreRegister() {
                     <S.EditTitle>영업시간</S.EditTitle>
                     <div>
                         <S.InputLabel htmlFor="openHour">
+                            오전
                             <S.TimeInput
                                 id="openHour"
                                 name="businessHours"
@@ -414,6 +415,7 @@ export default function StoreRegister() {
                             분 ~
                         </S.InputLabel>
                         <S.InputLabel htmlFor="closeHour">
+                            오후
                             <S.TimeInput
                                 id="closeHour"
                                 name="businessHours"
