@@ -20,7 +20,6 @@ import MyPage from './pages/MyPage/MyPage';
 import RequireLogin from './components/RequireLogin/RequireLogin';
 import Search from './pages/NewSearch/Search';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import SearchResult from './pages/SearchResult/SearchResult';
 
 const queryClient = new QueryClient();
 
@@ -70,8 +69,8 @@ const router = createBrowserRouter([
                         <StoreRegister />
                     </RequireLogin>
                 ),
-            }, // 혜지 수연
-            // { path: '/stores/search/:keyword', element: <SearchResult /> }, // 혜지
+            }, // 수연
+
             { path: '/stores/search/:keyword', element: <Search /> }, // 진규
         ],
     },

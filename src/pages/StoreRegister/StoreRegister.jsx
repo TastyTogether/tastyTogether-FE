@@ -35,7 +35,6 @@ export default function StoreRegister() {
         { name: '', price: '' },
     ]);
     const [banners, setBanners] = useState([]);
-    console.log(banners);
     const dayCheckList = ['월', '화', '수', '목', '금', '토', '일', '연중무휴'];
 
     const handleChange = (e) => {
@@ -394,7 +393,6 @@ export default function StoreRegister() {
                     <S.EditTitle>영업시간</S.EditTitle>
                     <div>
                         <S.InputLabel htmlFor="openHour">
-                            오전
                             <S.TimeInput
                                 id="openHour"
                                 name="businessHours"
@@ -415,7 +413,6 @@ export default function StoreRegister() {
                             분 ~
                         </S.InputLabel>
                         <S.InputLabel htmlFor="closeHour">
-                            오후
                             <S.TimeInput
                                 id="closeHour"
                                 name="businessHours"
