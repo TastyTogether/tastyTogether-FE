@@ -8,7 +8,7 @@ export default function BannerUploadContainer({ setBanners }) {
     const handlImageUpload = (event) => {
         const uploadImageFiles = event.target.files;
 
-        if (uploadImageFiles.length > 8) {
+        if (uploadImageFiles.length + uploadImageList.length > 8) {
             alert('이미지는 최대 8개까지 등록 가능합니다.');
             return;
         }

@@ -72,13 +72,11 @@ export default function DaumPostApi({
             if (response.data === '가게 확인 완료') {
                 setAddress(convertAddressFormat(data));
                 getLatLongFromAddress(data.address);
-                setIsRestaurantRegistered(
-                    '등록되지 않은 가게 입니다. 추가 정보들을 입력해주세요!',
-                );
+                setIsRestaurantRegistered('등록되지 않은 가게 입니다. 추가 정보들을 입력해주세요!');
                 return;
             }
         } catch (error) {
-            console.log(error);
+            console.err(error);
         }
     };
 

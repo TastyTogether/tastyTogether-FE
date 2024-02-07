@@ -35,7 +35,6 @@ export default function StoreRegister() {
         { name: '', price: '' },
     ]);
     const [banners, setBanners] = useState([]);
-    console.log(banners);
     const dayCheckList = ['월', '화', '수', '목', '금', '토', '일', '연중무휴'];
 
     const handleChange = (e) => {
