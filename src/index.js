@@ -70,6 +70,7 @@ const router = createBrowserRouter([
                     </RequireLogin>
                 ),
             }, // 수연
+
             { path: '/stores/search/:keyword', element: <Search /> }, // 진규
         ],
     },
