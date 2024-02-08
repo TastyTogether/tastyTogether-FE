@@ -23,22 +23,16 @@ export default function StoreDetailEdit() {
     const handleChange = (e) => {
         const { name, value, id } = e.target;
         if (name === 'newPhone') {
-            console.log(value);
             setNewPhone(value);
         }
         if (name === 'newPriceRange') {
-            console.log(value);
             setNewPriceRange(value);
         }
         if (name === 'newParkingInfo') {
-            console.log(value);
-
             setNewParkingInfo(value);
         }
         if (name === 'newBusinessHours') {
             if (id === 'openHour') {
-                console.log(value);
-
                 setNewBusinessHours((prevHours) => [
                     value,
                     prevHours[1],
@@ -46,8 +40,6 @@ export default function StoreDetailEdit() {
                     prevHours[3],
                 ]);
             } else if (id === 'openMinutes') {
-                console.log(value);
-
                 setNewBusinessHours((prevHours) => [
                     prevHours[0],
                     value,
@@ -55,8 +47,6 @@ export default function StoreDetailEdit() {
                     prevHours[3],
                 ]);
             } else if (id === 'closeHour') {
-                console.log(value);
-
                 setNewBusinessHours((prevHours) => [
                     prevHours[0],
                     prevHours[1],
@@ -64,8 +54,6 @@ export default function StoreDetailEdit() {
                     prevHours[3],
                 ]);
             } else if (id === 'closeMinutes') {
-                console.log(value);
-
                 setNewBusinessHours((prevHours) => [
                     prevHours[0],
                     prevHours[1],
@@ -77,7 +65,6 @@ export default function StoreDetailEdit() {
         if (/^(name|price)/i.test(name)) {
             const index = /\d/.exec(name)[0] - 1;
             const property = /[a-z]+/i.exec(name)[0];
-            console.log(value);
             setNewMenuItems((prev) => {
                 const newMenuItems = [...prev];
                 newMenuItems[index][property] = value;
@@ -88,12 +75,10 @@ export default function StoreDetailEdit() {
 
     const checkedDayHandler = (value, isChecked) => {
         if (isChecked) {
-            console.log(value);
             setNewClosedDays((prev) => [...prev, value]);
             return;
         }
         if (!isChecked && newClosedDays.includes(value)) {
-            console.log(value);
             setNewClosedDays(newClosedDays.filter((day) => day !== value));
             return;
         }
