@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import * as S from './style/TopDetail.style';
 import { useNavigate } from 'react-router-dom';
 import useAxios from '../../hooks/useAxios';
@@ -8,13 +8,12 @@ import axios from '../../utils/axios';
 export default function TopDetail({
     storeInfo,
     storeReviewCount,
-    storeLikeCount,
+    storeLikes,
     storeReview,
-    setStoreLikeCount,
-    setStoreInfo,
+    setStoreLikes,
 }) {
     const navigate = useNavigate();
-    const { name, type, starRating, address, banners, storeLikes } = storeInfo;
+    const { name, type, starRating, address, banners } = storeInfo;
     const bottomPhotoList = banners && banners.slice(1);
     const reviewPhotos = storeReview && storeReview.map((el) => el.photos);
     const reviewPhotoList = [].concat(...reviewPhotos);
@@ -26,14 +25,12 @@ export default function TopDetail({
             navigate(`/users/login`);
             return;
         }
-        await authRequiredAxios({
+        const res = await authRequiredAxios({
             method: 'patch',
             url: `/stores/${storeInfo._id}/storelikes`,
         });
-        const res = await axios.get(`/stores/${storeInfo._id}`);
         const data = res.data;
-        setStoreLikeCount(data.storeLikeCount);
-        setStoreInfo(data.storeInfo);
+        setStoreLikes(data);
     };
     const clickReviewBtn = async () => {
         if (!isLogin) {
@@ -53,7 +50,6 @@ export default function TopDetail({
         navigate(`/post/create`);
         return;
     };
-    const isUserLike = useMemo(() => storeLikes && storeLikes.includes(auth.userId), [storeLikes]);
 
     return (
         <S.TopDetailWrap>
@@ -97,7 +93,7 @@ export default function TopDetail({
                     <S.StarAverage>{starRating}</S.StarAverage>
                     <S.StarAverageCount>{`(${storeReviewCount}명의 평가)`} /</S.StarAverageCount>
                     <S.LikesSymbol src={'/imgs/orageBookmarkIcon.png'} />
-                    <S.LikesCount>{`(${storeLikeCount})`}</S.LikesCount>
+                    <S.LikesCount>{`(${storeLikes.length})`}</S.LikesCount>
                 </S.ScoreLeft>
                 <S.ViewInfo>
                     <S.ViewIcon src={'/imgs/viewIcon.png'} />
@@ -108,7 +104,11 @@ export default function TopDetail({
             <S.TopBtns>
                 <S.TopBtn type="button" isBook={true} onClick={clickBookMarkBtn}>
                     <S.TopBtnIcon
-                        src={isUserLike ? '/imgs/orageBookmarkIcon.png' : '/imgs/bookmarkIcon.png'}
+                        src={
+                            storeLikes && storeLikes.includes(auth.userId)
+                                ? '/imgs/orageBookmarkIcon.png'
+                                : '/imgs/bookmarkIcon.png'
+                        }
                         isBook={true}
                     />
                     <S.TopBtnText isBook={true}>북마크 추가</S.TopBtnText>
