@@ -9,10 +9,10 @@ export const Container = styled.div`
 export const DetailPost = styled.div`
     border-radius: 15px;
     width: 1000px;
-    height: 1100px;
     background-color: #fff;
     border: 2px solid #ff9c5f;
     margin: auto;
+    margin-bottom: 20px;
 `;
 export const PostHeader = styled.div``;
 export const SetBoard = styled.div`
@@ -126,18 +126,14 @@ export const ProfileImg = styled.img`
 // 댓글 box
 export const CommentBox = styled.div`
     width: auto;
-    height: 380px;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
-    &::-webkit-scrollbar {
-        display: none;
-    }
+    height: auto;
 `;
 
 // 댓글 컴포넌트
 export const CommentList = styled.div`
-    width: 998px;
+    width: auto;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -193,7 +189,7 @@ export const CommentRegister = styled.button`
 export const CommentAdd = styled.div`
     display: flex;
     justify-content: flex-end;
-    width: 850px;
+    width: 860px;
     height: 50px;
     border-radius: 10px;
     border: 2px solid #ff9c5f;
@@ -202,10 +198,24 @@ export const DeleteBtn = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
+    &:hover {
+        color: #f36d1a;
+    }
 `;
 export const CommentInput = styled.input`
     width: 750px;
     font-size: 15px;
     border: none;
     outline: none;
+`;
+
+export const MoreComment = styled.button`
+    color: white;
+    background-color: #ff9c5f;
+    margin-top: 10px;
+    border: none;
+    height: 30px;
+    width: 50px;
+    position: relative;
+    left: 90%;
 `;
