@@ -15,6 +15,7 @@ export default function PostDetail() {
     const [post, setPost] = useState(null);
     const [commentContent, setCommentContent] = useState('');
     const { authRequiredAxios } = useAxios('application/json');
+    const [commentsToShow, setCommentsToShow] = useState(3);
 
     const fetchPostDetail = async () => {
         try {
@@ -94,6 +95,11 @@ export default function PostDetail() {
         }, obj);
     };
 
+    const moreComment = () => {
+        console.log('hi');
+        setCommentsToShow(commentsToShow + 10000);
+    };
+
     return (
         <S.Container>
             <S.DetailPost>
@@ -158,7 +164,7 @@ export default function PostDetail() {
                 <S.CommentBox>
                     {post &&
                         post.comments &&
-                        post.comments.map((comment) => {
+                        post.comments.slice(0, commentsToShow).map((comment) => {
                             return (
                                 <S.CommentList key={comment.id}>
                                     <S.CommentProfile>
@@ -195,7 +201,9 @@ export default function PostDetail() {
                                 </S.CommentList>
                             );
                         })}
+                    <S.MoreComment onClick={moreComment}>더보기</S.MoreComment>
                 </S.CommentBox>
+
                 <S.AddComment>
                     <S.CommentAdd>
                         <S.CommentInput

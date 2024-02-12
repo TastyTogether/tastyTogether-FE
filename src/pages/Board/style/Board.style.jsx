@@ -15,7 +15,7 @@ export const FindText = styled.div`
     margin: 40px auto;
     display: flex;
     justify-content: center;
-    width: 600px;
+    width: 700px;
     height: 44px;
     color: #000;
     font-size: 50px;
@@ -91,7 +91,6 @@ export const SubmitBtn = styled.button`
 export const SearchInput = styled.input`
     font-size: 20px;
     padding: 10px;
-    width: 70%;
     border: none;
     outline: none;
     background-color: white;
@@ -99,7 +98,7 @@ export const SearchInput = styled.input`
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     &::placeholder {
-        text-indent: 50px;
+        text-indent: 20px;
         font-weight: bold;
     }
 `;
@@ -129,11 +128,12 @@ export const PostInfo = styled.div`
     text-align: center;
     border-bottom-left-radius: 5%;
     border-bottom-right-radius: 5%;
+    cursor: pointer;
 `;
 
 export const PostInfoText = styled.p`
     margin: 4px 0;
-    font-size: 14px;
+    font-size: 13px;
 `;
 
 export const Pagination = styled.div`
@@ -184,11 +184,12 @@ export const pageBtn = styled.div`
 export const SearchButton = styled.button`
     font-size: 20px;
     padding: 10px;
+    margin-left: 10px;
     border: none;
     outline: none;
     background-color: #ff914d;
     color: white;
-    border-radius: 30px;
+    border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease-out;
     &:hover {
