@@ -73,7 +73,7 @@ export default function LeftBanner({ storeName, storeAddress }) {
                     </S.NonePostContent>
                     <S.TitleLine isNone={true}></S.TitleLine>
                     <S.Navi>
-                        <S.NaviText>위의 메이트와 약속을 잡고 싶다면?</S.NaviText>
+                        <S.NaviText>메이트 게시글을 쓰고 싶다면?</S.NaviText>
                         <S.NaviBtn onClick={() => navigate(`/post/create`)}>Go</S.NaviBtn>
                     </S.Navi>
                 </S.MatePost>
