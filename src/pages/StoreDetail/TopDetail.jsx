@@ -66,7 +66,7 @@ export default function TopDetail({
                     </S.StoreLeftBottomImgs>
                 </S.StoreLeftImgs>
                 <S.StoreRightImgs>
-                    {storeReview.length > 0
+                    {reviewPhotoList.length > 0
                         ? new Array(4).fill(null).map((_, idx) => {
                               const photoIndex = idx % reviewPhotoList.length;
                               const reviewPhoto = reviewPhotoList[photoIndex];
