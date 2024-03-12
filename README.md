@@ -7,7 +7,8 @@
 - 혼밥이 두려운 사람을 위한 혼밥 메이트 찾기 게시판 서비스 제공
 
 ## 페르소나
-![김구름](/uploads/9035494fcbc4058f2abc3d52c01e11ae/김구름.png)
+
+![김구름](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/2b70b87c-6eb9-473c-8ef6-d4cfec93b222)
 
 
 <br />
@@ -18,7 +19,9 @@
     - Test PW : qwer1234 
  <div>
 
-![타이틀](/uploads/ecd5595c37cedfbf340c7994b4848a17/타이틀.png)
+
+![타이틀](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/87b16762-d343-44df-8036-3973974e2712)
+
 
 
 <br />
@@ -64,13 +67,10 @@
 
  <details><summary>가게 등록</summary>
 
-- 카카오 API를 활용한 가게 검색
-    - 주소 검색
-    - 지도에 마커 표시
-- 가게 등록 중복 검사 기능
-- 1개 이상 이미지 업로드 기능
-    - AWS S3 서버에 자동 업로드
-- 업종 선택 모달 창 구현
+- 다음 주소 api를 활용한 주소 검색 기능
+- 카카오 지도 api를 활용한 주소 검색 결과의 위치가 지도에 표시되는 기능
+- 업체명과 업체 주소를 기반으로 가게 중복에 대한 확인 문구 출력 기능
+- fileReader를 활용한 이미지 업로드 기능
 
 </details>
 
@@ -146,7 +146,9 @@
  <br/>
 
  ## 기술 스택
- ![기술스택](/uploads/60c39e2ecf8be17ad43e6f4ab9bece4f/기술스택.png)
+
+![기술스택](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/9790bc3c-e440-4b69-bc90-5777c3cc8ed9)
+
 
  <br/>
 
@@ -156,22 +158,23 @@
 | 이름 | 포지션 | 담당 업무 |  
 | ------ | ------ | ------ |  
 |  고윤렬   |  FE,BE   |  회원가입, 로그인, 유저정보   |
-|  김수연   |  FE,BE  |  가게상세페이지, 가게정보수정페이지, 가게등록페이지(BE), 가게검색페이지(BE)  |
-|  김진규   |  FE   |  공통 헤더&푸터, 메인페이지, 마이페이지, 리뷰작성페이지  |
+|  김수연   |  FE,BE  |  가게상세페이지, 가게정보수정페이지, 가게등록페이지, 가게검색페이지(BE)  |
+|  김진규   |  FE   |  공통 헤더&푸터, 메인페이지, 마이페이지, 리뷰작성페이지, 가게검색페이지(FE)  |
 |  유환욱   |  BE   |  메인페이지, 마이페이지, 리뷰작성페이지, 리뷰   |
 |  소화경   |  FE,BE   |  혼밥메이트게시판, 혼밥메이트개별포스트, 혼밥메이트작성페이지 |
-|  신혜지   |  FE,BE   |  가게검색페이지(FE), 가게등록페이지   |
 
 
 ### 폴더 구조
-![구조](/uploads/1733fc2c63bdba818cee39f87124b465/구조.png)
+![폴더구조](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/7da31ec7-1d7d-4d17-8368-762f269447cd)
+
 
 
 ## 트러블 슈팅
-![트러블1](/uploads/45021e76b57a64c0aa65d4f41f3609f9/트러블1.png)
-![트러블2](/uploads/b221c294169999721eba016f59ce93fb/트러블2.png)
-![트러블3](/uploads/d5c3d185d2c9e8af46adc7b75da48342/트러블3.png)
-![트러블4](/uploads/98ee1b6a8c911bb542ad7a89330817f3/트러블4.png)
+![트러블1](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/b9870a5e-c047-40ac-803a-aa6f1c54b1fa)
+![트러블2](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/b24ff035-a2f1-499a-8960-4e148902502e)
+![트러블3](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/5f1927ce-472c-4cdd-ad50-69559d28c5c5)
+![트러블4](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/40419b90-5fb7-43fa-81e7-803d7d5b4e0d)
+
 
 
 
