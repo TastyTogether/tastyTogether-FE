@@ -185,14 +185,14 @@ export const TopBtn = styled.button`
 `;
 
 export const TopBtnIcon = styled.img`
-    width: ${(props) => (props.isBook ? '10px' : '15px')};
-    height: ${(props) => (props.isBook ? '12px' : '15px')};
-    margin-top: ${(props) => (props.isBook ? '-1px' : '-2px')};
+    width: ${({ isBook }) => (isBook ? '10px' : '15px')};
+    height: ${({ isBook }) => (isBook ? '12px' : '15px')};
+    margin-top: ${({ isBook }) => (isBook ? '-1px' : '-2px')};
 `;
 
 export const TopBtnText = styled.p`
     color: #989797;
     font-size: 10px;
     font-weight: 400;
-    margin-left: ${(props) => (props.isBook ? '0px' : '')};
+    margin-left: ${({ isBook }) => (isBook ? '0px' : '')};
 `;
