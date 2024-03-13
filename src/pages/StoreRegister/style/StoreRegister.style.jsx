@@ -194,8 +194,8 @@ export const ChartHead = styled.th`
     font-size: 15px;
     font-weight: 400;
     background-color: #ff914d;
-    border-top-left-radius: ${(props) => (props.isLeft ? '5px' : '0px')};
-    border-top-right-radius: ${(props) => (props.isLeft ? '0px' : '5px')};
+    border-top-left-radius: ${({ isLeft }) => (isLeft ? '5px' : '0px')};
+    border-top-right-radius: ${({ isLeft }) => (isLeft ? '0px' : '5px')};
     height: 36px;
 `;
 
@@ -244,10 +244,10 @@ export const EditFormBtn = styled.button`
     width: 211px;
     height: 40px;
     border-radius: 5px;
-    border: 1px solid ${(props) => (props.isOrange ? '#ff914d' : ' #989797')};
-    background: ${(props) => (props.isOrange ? '#ff914d' : '#FFF')};
+    border: 1px solid ${({ isOrange }) => (isOrange ? '#ff914d' : ' #989797')};
+    background: ${({ isOrange }) => (isOrange ? '#ff914d' : '#FFF')};
     text-align: center;
-    color: ${(props) => (props.isOrange ? '#fff' : '#989797')};
+    color: ${({ isOrange }) => (isOrange ? '#fff' : '#989797')};
     font-size: 17px;
     font-weight: 400;
 `;

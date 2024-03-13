@@ -8,14 +8,14 @@ export const BannerUploadContainer = styled.div`
 export const BannerUploadLabel = styled.label`
     width: 114px;
     height: 27px;
-    border: ${(props) => (props.isCancleBtn ? '0.5px' : 'none')};
+    border: ${({ isCancleBtn }) => (isCancleBtn ? '0.5px' : 'none')};
     border-top: 0.5px solid #989797;
     border-right: 0.5px solid #989797;
     border-left: 0.5px solid #989797;
     border-radius: 5px 5px 0px 0px;
-    background: ${(props) => (props.isCancleBtn ? 'none' : '#989797')};
+    background: ${({ isCancleBtn }) => (isCancleBtn ? 'none' : '#989797')};
     padding: 5.4px 18.5px;
-    color: ${(props) => (props.isCancleBtn ? '#989797' : '#fff')};
+    color: ${({ isCancleBtn }) => (isCancleBtn ? '#989797' : '#fff')};
     text-align: center;
     font-size: 13px;
     cursor: pointer;
