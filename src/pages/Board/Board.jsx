@@ -80,7 +80,7 @@ export default function Board() {
                         value={text}
                         onChange={handleChange}
                     />
-                    <S.SearchButton type="submit">검색</S.SearchButton>
+                    <S.SearchButton>검색</S.SearchButton>
                 </S.SearchForm>
                 <S.StyledBoxWrapper>
                     {posts?.map((post) => (
