@@ -13,12 +13,13 @@
 
 <br />
 
+<!--
 ## 데모 사이트
  - URL : http://kdt-sw-5-2-team08.elicecoding.com/
     - Test ID : test1@naver.com
     - Test PW : qwer1234 
  <div>
-
+-->
 
 ![타이틀](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/87b16762-d343-44df-8036-3973974e2712)
 
