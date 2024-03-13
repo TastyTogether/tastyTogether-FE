@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import * as S from './style/LeftBanner.style';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import KakaoMap from './KakaoMap';
-import axios from '../../utils/axios';
 import useAuth from '../../hooks/useAuth';
+import axios from '../../utils/axios';
+import KakaoMap from './KakaoMap';
+import * as S from './style/LeftBanner.style';
 
 export default function LeftBanner({ storeName, storeAddress }) {
     const navigate = useNavigate();
@@ -35,8 +35,9 @@ export default function LeftBanner({ storeName, storeAddress }) {
                     <S.NaviText isMap={true}>맛집으로 길찾기 하고 싶다면?</S.NaviText>
                     <S.NaviBtn
                         onClick={() =>
-                            window.open(`https://map.kakao.com/link/to/${storeName},${latitude}
-,${longitude}`)
+                            window.open(
+                                `https://map.kakao.com/link/to/${storeName},${latitude},${longitude}`,
+                            )
                         }
                     >
                         Go
@@ -72,7 +73,7 @@ export default function LeftBanner({ storeName, storeAddress }) {
                     </S.NonePostContent>
                     <S.TitleLine isNone={true}></S.TitleLine>
                     <S.Navi>
-                        <S.NaviText>위의 메이트와 약속을 잡고 싶다면?</S.NaviText>
+                        <S.NaviText>메이트 게시글을 쓰고 싶다면?</S.NaviText>
                         <S.NaviBtn onClick={() => navigate(`/post/create`)}>Go</S.NaviBtn>
                     </S.Navi>
                 </S.MatePost>
@@ -80,4 +81,3 @@ export default function LeftBanner({ storeName, storeAddress }) {
         </S.LeftBannerWrapper>
     );
 }
-

@@ -8,7 +8,8 @@ const useAxios = (contentType) => {
     const { auth } = useAuth();
     // axios Instance
     const authRequiredAxios = axios.create({
-        baseURL: 'http://kdt-sw-5-2-team08.elicecoding.com/api', // 배포용 서버
+         baseURL:'http://localhost:8080',
+        // baseURL: 'http://kdt-sw-5-2-team08.elicecoding.com/api', // 배포용 서버
         headers: {
             'Content-Type': contentType,
             Authorization: `Bearer ${auth.accessToken} `,

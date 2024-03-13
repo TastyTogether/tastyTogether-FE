@@ -39,14 +39,14 @@ export const MapInfoTitle = styled.h4`
 
 export const Navi = styled.div`
     display: flex;
-    margin-top: ${(props) => (props.isMap ? '6px' : '20px')};
-    margin-left: ${(props) => (props.isMap ? '0px' : '6px')};
+    margin-top: ${({ isMap }) => (isMap ? '6px' : '20px')};
+    margin-left: ${({ isMap }) => (isMap ? '0px' : '6px')};
     gap: 6px;
 `;
 
 export const NaviText = styled.p`
     color: #000;
-    font-size: ${(props) => (props.isMap ? '12px' : '11px')};
+    font-size: ${({ isMap }) => (isMap ? '12px' : '11px')};
     font-weight: 400;
 `;
 
@@ -92,7 +92,7 @@ export const TitleLine = styled.div`
     width: 214px;
     height: 1px;
     background: #ff914d;
-    margin-top: ${(props) => (props.isNone ? '40px' : '10px')};
+    margin-top: ${({ isNone }) => (isNone ? '40px' : '10px')};
 `;
 
 export const MatePostCotent = styled.p`

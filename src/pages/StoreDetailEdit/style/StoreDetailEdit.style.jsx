@@ -30,7 +30,7 @@ export const EditContentBox = styled.div`
     margin-left: 20px;
     > div {
         display: flex;
-        gap: ${(props) => (props.isSmallGap ? '14px' : '32px')};
+        gap: ${({ isSmallGap }) => (isSmallGap ? '14px' : '32px')};
     }
 `;
 
@@ -41,19 +41,19 @@ export const EditTitle = styled.div`
 `;
 
 export const InputBox = styled.input`
-    width: ${(props) => (props.isPhone ? '352px' : '198px')};
+    width: ${({ isPhone }) => (isPhone ? '352px' : '198px')};
     height: 32px;
     border: 1px solid #989797;
     border-radius: 5px;
     margin-top: -6px;
-    text-indent: ${(props) => (props.isPhone ? '16px' : '12px')};
+    text-indent: ${({ isPhone }) => (isPhone ? '16px' : '12px')};
     &:focus {
         outline: 2px solid rgba(255, 145, 77, 0.6);
     }
     &::placeholder {
         color: #989797;
         font-size: 13px;
-        text-indent: ${(props) => (props.isPhone ? '16px' : '12px')};
+        text-indent: ${({ isPhone }) => (isPhone ? '16px' : '12px')};
     }
 `;
 
@@ -142,8 +142,8 @@ export const ChartHead = styled.th`
     font-size: 14px;
     font-weight: 400;
     background-color: #ff914d;
-    border-top-left-radius: ${(props) => (props.isLeft ? '5px' : '0px')};
-    border-top-right-radius: ${(props) => (props.isLeft ? '0px' : '5px')};
+    border-top-left-radius: ${({ isLeft }) => (isLeft ? '5px' : '0px')};
+    border-top-right-radius: ${({ isLeft }) => (isLeft ? '0px' : '5px')};
     height: 36px;
 `;
 
@@ -191,10 +191,10 @@ export const EditFormBtn = styled.button`
     width: 166px;
     height: 40px;
     border-radius: 5px;
-    border: 1px solid ${(props) => (props.isOrange ? '#ff914d' : ' #989797')};
-    background: ${(props) => (props.isOrange ? '#ff914d' : '#FFF')};
+    border: 1px solid ${({ isOrange }) => (isOrange ? '#ff914d' : ' #989797')};
+    background: ${({ isOrange }) => (isOrange ? '#ff914d' : '#FFF')};
     text-align: center;
-    color: ${(props) => (props.isOrange ? '#fff' : '#989797')};
+    color: ${({ isOrange }) => (isOrange ? '#fff' : '#989797')};
     font-size: 17px;
     font-weight: 400;
 `;

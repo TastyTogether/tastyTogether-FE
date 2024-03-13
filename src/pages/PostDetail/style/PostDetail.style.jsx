@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-
 export const Container = styled.div`
     min-height: 100vh;
     margin-top: 6%;
@@ -10,10 +9,10 @@ export const Container = styled.div`
 export const DetailPost = styled.div`
     border-radius: 15px;
     width: 1000px;
-    height: 1100px;
     background-color: #fff;
     border: 2px solid #ff9c5f;
     margin: auto;
+    margin-bottom: 20px;
 `;
 export const PostHeader = styled.div``;
 export const SetBoard = styled.div`
@@ -109,17 +108,12 @@ export const UserBox = styled.div`
     }
 `;
 
-export const CommentBox = styled.div`
-    width: auto;
-    height: 380px;
-    display: flex;
-    flex-direction: column;
-`;
 export const AddComment = styled.div`
     width: auto;
     height: 150px;
     display: flex;
     justify-content: center;
+    align-items: center;
 `;
 export const ProfileImg = styled.img`
     width: 47px;
@@ -128,6 +122,33 @@ export const ProfileImg = styled.img`
     height: 100%;
     object-fit: cover;
 `;
+
+// 댓글 box
+export const CommentBox = styled.div`
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+`;
+
+// 댓글 컴포넌트
+export const CommentList = styled.div`
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid #ff9c5f;
+`;
+
+// 댓글 프로필 부분 (프로필 이미지 + 닉네임 + 작성시간)
+export const CommentProfile = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 20px;
+`;
+
+// 댓글 프로필 이미지 감싸는 컴포넌트
 export const ProfileBox = styled.div`
     width: 50px;
     height: 50px;
@@ -135,17 +156,12 @@ export const ProfileBox = styled.div`
     overflow: hidden;
     margin-right: 20px;
 `;
-export const CommentProfile = styled.div`
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    margin-left: 20px;
-    margin-top: 10px;
-    font-size: 20px;
-`;
+
+// 댓글 작성 시간
 export const CommentTime = styled.div`
     font-size: 15px;
 `;
+
 export const CommentContent = styled.div`
     display: flex;
     justify-content: space-between;
@@ -154,11 +170,7 @@ export const CommentContent = styled.div`
     margin-left: 50px;
     margin-right: 50px;
 `;
-export const CommnetList = styled.div`
-    width: 998px;
-    height: 125px;
-    border-bottom: 2px solid #ff9c5f;
-`;
+
 export const NickName = styled.div`
     font-size: 18px;
 `;
@@ -177,7 +189,7 @@ export const CommentRegister = styled.button`
 export const CommentAdd = styled.div`
     display: flex;
     justify-content: flex-end;
-    width: 850px;
+    width: 860px;
     height: 50px;
     border-radius: 10px;
     border: 2px solid #ff9c5f;
@@ -186,10 +198,24 @@ export const DeleteBtn = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
+    &:hover {
+        color: #f36d1a;
+    }
 `;
-export const CommnetInput = styled.input`
+export const CommentInput = styled.input`
     width: 750px;
     font-size: 15px;
     border: none;
     outline: none;
+`;
+
+export const MoreComment = styled.button`
+    color: white;
+    background-color: #ff9c5f;
+    margin-top: 10px;
+    border: none;
+    height: 30px;
+    width: 50px;
+    position: relative;
+    left: 90%;
 `;

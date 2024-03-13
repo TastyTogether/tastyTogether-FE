@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as S from './style/CreatePost.style';
 import { FaImage, FaRegCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import useAxios from '../../hooks/useAxios';
@@ -79,12 +79,12 @@ export default function CreatePost() {
                             style={{ width: '100%', height: '100%' }}
                         />
                     ) : (
-                        <>
-                            <S.ImageUploadIcon onClick={handleIconClick}>
+                        <span onClick={handleIconClick}>
+                            <S.ImageUploadIcon>
                                 <FaImage />
                             </S.ImageUploadIcon>
                             <span style={{ fontSize: '24px' }}>이미지 파일을 선택해주세요.</span>
-                        </>
+                        </span>
                     )}
                 </S.Box2>
                 <S.Box3>
@@ -100,7 +100,6 @@ export default function CreatePost() {
                         onChange={(e) => setContent(e.target.value)}
                     />
                 </S.Box4>
-
                 <S.Btn>
                     <Link to="/post">
                         <S.ButtonCancel>취소</S.ButtonCancel>

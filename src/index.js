@@ -15,10 +15,13 @@ import PostUpdate from './pages/PostUpdate/PostUpdate';
 import PostDetail from './pages/PostDetail/PostDetail';
 import CreateReview from './pages/CreateReview/CreateReview';
 import StoreRegister from './pages/StoreRegister/StoreRegister';
-import SearchResult from './pages/SearchResult/SearchResult';
 import StoreDetailEdit from './pages/StoreDetailEdit/StoreDetailEdit';
 import MyPage from './pages/MyPage/MyPage';
 import RequireLogin from './components/RequireLogin/RequireLogin';
+import Search from './pages/NewSearch/Search';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
     {
@@ -38,6 +41,7 @@ const router = createBrowserRouter([
             { path: '/review/:storeId', element: <CreateReview /> }, // 진규
             { path: '/stores/detail/:id', element: <StoreDetail /> }, // 수연
             { path: '/stores/detail/:id/edit', element: <StoreDetailEdit /> }, // 수연
+            { path: '/stores/register', element: <StoreRegister /> }, // 수연
             { path: '/users/login', element: <UserLogin /> }, // 윤렬
             { path: '/users/signup', element: <UserSignUp /> }, // 윤렬
             { path: '/post', element: <Board /> }, // 화경
@@ -65,8 +69,9 @@ const router = createBrowserRouter([
                         <StoreRegister />
                     </RequireLogin>
                 ),
-            }, // 혜지 수연
-            { path: '/stores/search', element: <SearchResult /> }, // 혜지
+            }, // 수연
+
+            { path: '/stores/search/:keyword', element: <Search /> }, // 진규
         ],
     },
 ]);
@@ -74,7 +79,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+        </QueryClientProvider>
     </React.StrictMode>,
 );
 

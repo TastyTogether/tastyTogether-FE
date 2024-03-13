@@ -10,19 +10,19 @@ import axios from '../../utils/axios';
 export default function StoreDetail() {
     const [storeInfo, setStoreInfo] = useState({});
     const [storeReviewCount, setStoreReviewCount] = useState(0);
-    const [storeLikeCount, setStoreLikeCount] = useState(0);
+    const [storeLikes, setStoreLikes] = useState([]);
     const [storeReview, setStoreReview] = useState([]);
     const [storeReviews, setStoreReviews] = useState([]);
     const location = useLocation();
     const currentPath = location.pathname;
     const storeId = currentPath.split('/')[3];
-    
+
     useEffect(() => {
         const getData = async () => {
             const res = await axios.get(`/stores/${storeId}`);
             const data = res.data;
             setStoreInfo(data.storeInfo);
-            setStoreLikeCount(data.storeLikeCount);
+            setStoreLikes(data.storeInfo.storeLikes);
             setStoreReviewCount(data.storeReviewCount);
             setStoreReview(data.storeInfo.reviews);
             setStoreReviews(data.newStoreReviews);
@@ -36,11 +36,10 @@ export default function StoreDetail() {
                 <S.Main>
                     <TopDetail
                         storeInfo={storeInfo}
-                        setStoreInfo={setStoreInfo}
-                        storeLikeCount={storeLikeCount}
+                        storeLikes={storeLikes}
                         storeReviewCount={storeReviewCount}
                         storeReview={storeReview}
-                        setStoreLikeCount={setStoreLikeCount}
+                        setStoreLikes={setStoreLikes}
                     ></TopDetail>
                     <BottomDetail storeInfo={storeInfo}></BottomDetail>
                     <Reviews reviews={storeReviews}></Reviews>

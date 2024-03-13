@@ -7,6 +7,7 @@
 - 혼밥이 두려운 사람을 위한 혼밥 메이트 찾기 게시판 서비스 제공
 
 ## 페르소나
+
 ![김구름](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/2b70b87c-6eb9-473c-8ef6-d4cfec93b222)
 
 
@@ -17,6 +18,7 @@
     - Test ID : test1@naver.com
     - Test PW : qwer1234 
  <div>
+
 
 ![타이틀](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/87b16762-d343-44df-8036-3973974e2712)
 
@@ -144,6 +146,7 @@
  <br/>
 
  ## 기술 스택
+
 ![기술스택](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/9790bc3c-e440-4b69-bc90-5777c3cc8ed9)
 
 
@@ -171,6 +174,7 @@
 ![트러블2](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/b24ff035-a2f1-499a-8960-4e148902502e)
 ![트러블3](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/5f1927ce-472c-4cdd-ad50-69559d28c5c5)
 ![트러블4](https://github.com/TastyTogether/tastyTogether-FE/assets/128280275/40419b90-5fb7-43fa-81e7-803d7d5b4e0d)
+
 
 
 

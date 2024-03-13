@@ -3,9 +3,7 @@ import { useNavigate, Link, useParams } from 'react-router-dom';
 import * as S from './style/Board.style';
 import { FiSearch } from 'react-icons/fi';
 import axios from '../../utils/axios';
-import {
-    FaMapMarkerAlt
-} from 'react-icons/fa';
+import { FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function Board() {
     const [text, setText] = useState('');
@@ -82,7 +80,7 @@ export default function Board() {
                         value={text}
                         onChange={handleChange}
                     />
-                  <S.SearchButton type="submit">검색</S.SearchButton>
+                    <S.SearchButton>검색</S.SearchButton>
                 </S.SearchForm>
                 <S.StyledBoxWrapper>
                     {posts?.map((post) => (
@@ -91,7 +89,10 @@ export default function Board() {
                                 <S.StyledBoxImage src={post.image} alt="Post" />
                             </S.StyledBoxImageWrapper>
                             <S.PostInfo>
-                                <S.PostInfoText><FaMapMarkerAlt/>{post.region}</S.PostInfoText>
+                                <S.PostInfoText>
+                                    <FaMapMarkerAlt />
+                                    {post.region}
+                                </S.PostInfoText>
                                 <S.PostInfoText>{post.title}</S.PostInfoText>
                                 <S.PostInfoText>{post.meetDate}</S.PostInfoText>
                             </S.PostInfo>
